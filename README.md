@@ -1,1 +1,1 @@
-# life-calendar-frontend
+# Life Calendar Frontend
