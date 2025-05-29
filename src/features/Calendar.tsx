@@ -27,11 +27,21 @@ export default function Calendar() {
       </label>
 
       <div className="grid grid-cols-52 gap-1">
+        {Array.from({ length: WEEKS_PER_YEAR }).map((_, week) => (
+          <div key={week} className="relative">
+            <span className="absolute text-[10px]">
+              {(week + 1) % 5 === 0 ? week + 1 : ""}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-52 gap-1">
         {Array.from({ length: TOTAL_WEEKS }).map((_, week) => (
           <div
             key={week}
-            className={`w-3 h-3 rounded transition ${
-              week < livedWeeks ? "bg-gray-800" : "bg-gray-200"
+            className={`w-2 h-2 transition ${
+              week < livedWeeks ? "bg-gray-800" : "bg-gray-300"
             }`}
           />
         ))}
