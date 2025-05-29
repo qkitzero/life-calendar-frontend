@@ -13,7 +13,17 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Life Calendar",
+  title: "Life Calendar - Visualize Your Weeks of Life",
+  description:
+    "Track your life week by week with the Life Calendar. Reflect on time passed and plan your future effectively.",
+  keywords: [
+    "life calendar",
+    "your life in weeks",
+    "life planner",
+    "weeks lived",
+    "productivity",
+    "life tracker",
+  ],
 };
 
 export default function RootLayout({
