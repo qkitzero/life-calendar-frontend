@@ -25,7 +25,7 @@ steps:
         "--image",
         "asia-northeast1-docker.pkg.dev/$PROJECT_ID/life-calendar-frontend/$COMMIT_SHA",
         "--region",
-        "asia-northeast1-docker",
+        "asia-northeast1",
       ]
 
 images:
