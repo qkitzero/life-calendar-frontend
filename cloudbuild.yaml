@@ -4,14 +4,18 @@ steps:
       [
         "build",
         "-t",
-        "gcr.io/$PROJECT_ID/life-calendar-frontend/$COMMIT_SHA",
+        "us-central1-docker.pkg.dev/$PROJECT_ID/life-calendar-frontend/$COMMIT_SHA",
         ".",
       ]
 
   - name: "gcr.io/cloud-builders/docker"
-    args: ["push", "gcr.io/$PROJECT_ID/life-calendar-frontend/$COMMIT_SHA"]
+    args:
+      [
+        "push",
+        "us-central1-docker.pkg.dev/$PROJECT_ID/life-calendar-frontend/$COMMIT_SHA",
+      ]
 
-  - name: "gcr.io/cloud-builders/gcloud"
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: gcloud
     args:
       [
@@ -19,13 +23,13 @@ steps:
         "deploy",
         "life-calendar-frontend",
         "--image",
-        "gcr.io/$PROJECT_ID/life-calendar-frontend/$COMMIT_SHA",
+        "us-central1-docker.pkg.dev/$PROJECT_ID/life-calendar-frontend/$COMMIT_SHA",
         "--region",
-        "asia-northeast1",
+        "us-central1",
       ]
 
 images:
-  - "gcr.io/$PROJECT_ID/life-calendar-frontend/$COMMIT_SHA"
+  - "asia-northeast1-docker.pkg.dev/$PROJECT_ID/life-calendar-frontend/$COMMIT_SHA"
 
 options:
   logging: CLOUD_LOGGING_ONLY
