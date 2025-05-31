@@ -29,7 +29,7 @@ steps:
       ]
 
 images:
-  - "asia-northeast1-docker.pkg.dev/$PROJECT_ID/life-calendar-frontend/$COMMIT_SHA"
+  - "us-central1-docker.pkg.dev/$PROJECT_ID/life-calendar-frontend/$COMMIT_SHA"
 
 options:
   logging: CLOUD_LOGGING_ONLY
