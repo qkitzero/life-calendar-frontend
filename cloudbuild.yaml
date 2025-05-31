@@ -11,7 +11,7 @@ steps:
   - name: "gcr.io/cloud-builders/docker"
     args: ["push", "gcr.io/$PROJECT_ID/life-calendar-frontend/$COMMIT_SHA"]
 
-  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+  - name: "gcr.io/cloud-builders/gcloud"
     entrypoint: gcloud
     args:
       [
