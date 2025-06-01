@@ -4,15 +4,32 @@ import { useState } from "react";
 
 const MAX_YEARS = 80;
 const WEEKS_PER_YEAR = 52;
-const TOTAL_WEEKS = MAX_YEARS * WEEKS_PER_YEAR;
 
 export default function Calendar() {
   const [birthDateStr, setBirthDateStr] = useState("2000-01-01");
 
   const birthDate = new Date(birthDateStr);
   const now = new Date();
-  const diffInMs = now.getTime() - birthDate.getTime();
-  const livedWeeks = Math.floor(diffInMs / (1000 * 60 * 60 * 24 * 7));
+  const diff = now.getTime() - birthDate.getTime();
+  const years = new Date(diff).getUTCFullYear() - 1970;
+  const isBirthDatePassedThisYear =
+    now.getTime() >
+    new Date(
+      now.getUTCFullYear(),
+      birthDate.getMonth(),
+      birthDate.getDate()
+    ).getTime();
+  const birthDateYearOffset = isBirthDatePassedThisYear ? 0 : 1;
+  const lastBirthDate = new Date(
+    now.getUTCFullYear() - birthDateYearOffset,
+    birthDate.getMonth(),
+    birthDate.getDate()
+  );
+  const daysSinceLastBirthDate = Math.floor(
+    (now.getTime() - lastBirthDate.getTime()) / (1000 * 60 * 60 * 24)
+  );
+  const livedWeeks =
+    years * WEEKS_PER_YEAR + Math.floor(daysSinceLastBirthDate / 7);
 
   return (
     <div>
@@ -34,7 +51,7 @@ export default function Calendar() {
           {Array.from({ length: WEEKS_PER_YEAR + 1 }).map((_, week) => (
             <div key={week} className="w-2 h-2 relative">
               <span className="absolute -top-4 inset-0 flex justify-center items-center text-[10px]">
-                {week % 5 === 0 && week !== 0 ? week : ""}
+                {(week % 5 === 0 && week !== 0) || week === 1 ? week : ""}
               </span>
             </div>
           ))}
@@ -44,7 +61,7 @@ export default function Calendar() {
           <div key={year} className="grid grid-cols-53 gap-1">
             <div className="relative">
               <span className="absolute -left-4 inset-0 flex justify-center items-center text-[10px]">
-                {(year + 1) % 5 === 0 ? year + 1 : ""}
+                {year % 5 === 0 ? year : ""}
               </span>
             </div>
 
