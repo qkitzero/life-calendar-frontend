@@ -34,8 +34,6 @@ steps:
         "us-central1-docker.pkg.dev/$PROJECT_ID/life-calendar-frontend/$COMMIT_SHA",
         "--region",
         "us-central1",
-        "--update-secrets",
-        "SITE_URL=LIFE_CALENDAR_SITE_URL:latest",
       ]
 
 images:
