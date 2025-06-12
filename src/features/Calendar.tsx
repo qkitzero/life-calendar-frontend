@@ -68,9 +68,11 @@ export default function Calendar() {
             {Array.from({ length: WEEKS_PER_YEAR }).map((_, week) => (
               <div
                 key={week}
-                className={`w-2 h-2 transition ${
+                className={`w-3 h-3 transition ${
                   year * WEEKS_PER_YEAR + week < livedWeeks
                     ? "bg-gray-800"
+                    : year * WEEKS_PER_YEAR + week === livedWeeks
+                    ? "bg-green-500 animate-bounce"
                     : "bg-gray-300"
                 }`}
               />
