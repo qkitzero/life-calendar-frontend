@@ -21,7 +21,7 @@ export default function LoginButton() {
     <button
       onClick={handleLogin}
       disabled={isLoading}
-      className="bg-gray-300 text-white px-4 py-2 rounded hover:bg-gray-800 disabled:opacity-50"
+      className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-300 disabled:opacity-50"
     >
       {isLoading ? "Logging in..." : "Login"}
     </button>
