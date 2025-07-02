@@ -22,8 +22,6 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  console.log(authServiceRes);
-
   const { accessToken } = await authServiceRes.json();
 
   const res = NextResponse.redirect(`${req.nextUrl.origin}/`);
