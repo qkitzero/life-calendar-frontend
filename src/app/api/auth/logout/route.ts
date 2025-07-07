@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 const AUTH_SERVICE_URL =
-  process.env.NEXT_PUBLIC_AUTH_SERVICE_URL || "http://localhost:8081";
+  process.env.AUTH_SERVICE_URL || "http://localhost:8081";
 
 export async function GET(req: NextRequest) {
   const returnTo = `${req.nextUrl.origin}/`;

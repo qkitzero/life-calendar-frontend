@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 const USER_SERVICE_URL =
-  process.env.NEXT_PUBLIC_USER_SERVICE_URL || "http://localhost:8082";
+  process.env.USER_SERVICE_URL || "http://localhost:8082";
 
 export async function GET(req: NextRequest) {
   const accessToken = req.cookies.get("access_token")?.value;
