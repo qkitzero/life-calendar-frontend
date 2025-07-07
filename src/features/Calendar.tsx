@@ -47,7 +47,7 @@ export default function Calendar() {
     years * WEEKS_PER_YEAR + Math.floor(daysSinceLastBirthDate / 7);
 
   return (
-    <div>
+    <div className="flex flex-col items-center">
       <div className="text-center mb-8">
         <label htmlFor="birthdate" className="mr-2">
           Birth Date
