@@ -11,7 +11,7 @@ export default function Header() {
 
   return (
     <header className="w-full flex justify-between items-center py-4 border-b mb-8">
-      <Link href="/" className="text-2xl font-bold hover:opacity-80 transition">
+      <Link href="/" className="text-3xl font-bold hover:opacity-80 transition">
         Life Calendar
       </Link>
 
