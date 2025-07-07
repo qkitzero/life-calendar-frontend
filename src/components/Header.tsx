@@ -6,7 +6,7 @@ import LoginButton from "@/components/LoginButton";
 import LogoutButton from "@/components/LogoutButton";
 
 export default function Header() {
-  const user = useUser();
+  const { user } = useUser();
 
   if (!user) {
     return (

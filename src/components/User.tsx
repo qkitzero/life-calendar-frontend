@@ -1,7 +1,7 @@
 import { useUser } from "@/context/UserContext";
 
 export default function User() {
-  const user = useUser();
+  const { user } = useUser();
 
   if (!user) {
     return (

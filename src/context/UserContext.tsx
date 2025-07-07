@@ -14,29 +14,39 @@ type User = {
   birthDate: BirthDate;
 } | null;
 
-const UserContext = createContext<User>(null);
+type UserContextType = {
+  user: User;
+  refreshUser: () => Promise<void>;
+};
+
+const UserContext = createContext<UserContextType>({
+  user: null,
+  refreshUser: async () => {},
+});
 
 export const useUser = () => useContext(UserContext);
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User>(null);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const res = await fetch("/api/user/get");
-        if (!res.ok) {
-          throw new Error("Failed to fetch user");
-        }
-        const data = await res.json();
-        setUser(data);
-      } catch {
-        setUser(null);
-      }
-    };
+  const fetchUser = async () => {
+    try {
+      const res = await fetch("/api/user/get");
+      if (!res.ok) throw new Error("Failed to fetch user");
+      const data = await res.json();
+      setUser(data);
+    } catch {
+      setUser(null);
+    }
+  };
 
+  useEffect(() => {
     fetchUser();
   }, []);
 
-  return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
+  return (
+    <UserContext.Provider value={{ user, refreshUser: fetchUser }}>
+      {children}
+    </UserContext.Provider>
+  );
 };

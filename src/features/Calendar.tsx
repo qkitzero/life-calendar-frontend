@@ -9,7 +9,7 @@ const WEEKS_PER_YEAR = 52;
 export default function Calendar() {
   const [birthDateStr, setBirthDateStr] = useState("2000-01-01");
 
-  const user = useUser();
+  const { user } = useUser();
 
   useEffect(() => {
     if (user) {
