@@ -24,13 +24,37 @@ export async function GET(req: NextRequest) {
 
   const { accessToken } = await authServiceRes.json();
 
-  const res = NextResponse.redirect(`${req.nextUrl.origin}/`);
+  const userServiceRes = await fetch(`${USER_SERVICE_URL}/v1/user`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
 
+  if (userServiceRes.status === 404) {
+    const res = NextResponse.redirect(`${req.nextUrl.origin}/register`);
+    res.cookies.set("access_token", accessToken, {
+      httpOnly: true,
+      secure: true,
+      path: "/",
+    });
+    return res;
+  }
+
+  if (!userServiceRes.ok) {
+    console.error("Failed to get user:", await userServiceRes.text());
+    return NextResponse.json(
+      { error: "Get user request failed" },
+      { status: userServiceRes.status }
+    );
+  }
+
+  const res = NextResponse.redirect(`${req.nextUrl.origin}/`);
   res.cookies.set("access_token", accessToken, {
     httpOnly: true,
     secure: true,
     path: "/",
   });
-
   return res;
 }
