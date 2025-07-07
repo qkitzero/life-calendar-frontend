@@ -1,12 +1,27 @@
 "use client";
 
-import { useState } from "react";
+import { useUser } from "@/context/UserContext";
+import { useState, useEffect } from "react";
 
 const MAX_YEARS = 80;
 const WEEKS_PER_YEAR = 52;
 
 export default function Calendar() {
   const [birthDateStr, setBirthDateStr] = useState("2000-01-01");
+
+  const { user } = useUser();
+
+  useEffect(() => {
+    if (user) {
+      setBirthDateStr(
+        user.birthDate.year.toString().padStart(4, "0") +
+          "-" +
+          user.birthDate.month.toString().padStart(2, "0") +
+          "-" +
+          user.birthDate.day.toString().padStart(2, "0")
+      );
+    }
+  }, [user]);
 
   const birthDate = new Date(birthDateStr);
   const now = new Date();
@@ -32,7 +47,7 @@ export default function Calendar() {
     years * WEEKS_PER_YEAR + Math.floor(daysSinceLastBirthDate / 7);
 
   return (
-    <div>
+    <div className="flex flex-col items-center">
       <div className="text-center mb-8">
         <label htmlFor="birthdate" className="mr-2">
           Birth Date
