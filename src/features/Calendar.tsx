@@ -2,6 +2,7 @@
 
 import { useUser } from "@/context/UserContext";
 import { useState, useEffect } from "react";
+import Cell from "@/components/Cell";
 
 const MAX_YEARS = 80;
 const WEEKS_PER_YEAR = 52;
@@ -80,18 +81,13 @@ export default function Calendar() {
               </span>
             </div>
 
-            {Array.from({ length: WEEKS_PER_YEAR }).map((_, week) => (
-              <div
-                key={week}
-                className={`w-3 h-3 transition ${
-                  year * WEEKS_PER_YEAR + week < livedWeeks
-                    ? "bg-gray-800"
-                    : year * WEEKS_PER_YEAR + week === livedWeeks
-                    ? "bg-green-500 animate-bounce"
-                    : "bg-gray-300"
-                }`}
-              />
-            ))}
+            {Array.from({ length: WEEKS_PER_YEAR }).map((_, week) => {
+              const isLived = year * WEEKS_PER_YEAR + week < livedWeeks;
+              const isCurrent = year * WEEKS_PER_YEAR + week === livedWeeks;
+              return (
+                <Cell key={week} isLived={isLived} isCurrent={isCurrent} />
+              );
+            })}
           </div>
         ))}
       </div>
