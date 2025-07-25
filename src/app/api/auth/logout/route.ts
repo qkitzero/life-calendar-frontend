@@ -1,10 +1,12 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 const AUTH_SERVICE_URL =
   process.env.AUTH_SERVICE_URL || "http://localhost:8081";
 
-export async function GET(req: NextRequest) {
-  const returnTo = `${req.nextUrl.origin}/`;
+export async function GET() {
+  const returnTo = `${SITE_URL}/`;
 
   const authServiceRes = await fetch(`${AUTH_SERVICE_URL}/v1/logout`, {
     method: "POST",

@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
 const AUTH_SERVICE_URL =
   process.env.AUTH_SERVICE_URL || "http://localhost:8081";
 
@@ -8,7 +10,7 @@ const USER_SERVICE_URL =
 
 export async function GET(req: NextRequest) {
   const code = req.nextUrl.searchParams.get("code");
-  const redirectUri = `${req.nextUrl.origin}/api/auth/callback`;
+  const redirectUri = `${SITE_URL}/api/auth/callback`;
 
   const authServiceRes = await fetch(`${AUTH_SERVICE_URL}/v1/exchange-code`, {
     method: "POST",
@@ -36,7 +38,7 @@ export async function GET(req: NextRequest) {
   });
 
   if (userServiceRes.status === 404) {
-    const res = NextResponse.redirect(`${req.nextUrl.origin}/register`);
+    const res = NextResponse.redirect(`${SITE_URL}/register`);
     res.cookies.set("access_token", accessToken, {
       httpOnly: true,
       secure: true,
@@ -53,7 +55,7 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  const res = NextResponse.redirect(`${req.nextUrl.origin}/`);
+  const res = NextResponse.redirect(`${SITE_URL}/`);
   res.cookies.set("access_token", accessToken, {
     httpOnly: true,
     secure: true,
