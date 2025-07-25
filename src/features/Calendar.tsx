@@ -2,6 +2,7 @@
 
 import { useUser } from "@/context/UserContext";
 import { useState, useEffect } from "react";
+import Cell from "@/components/Cell";
 
 const MAX_YEARS = 80;
 const WEEKS_PER_YEAR = 52;
@@ -48,6 +49,7 @@ export default function Calendar() {
 
   return (
     <div className="flex flex-col items-center">
+      {/* Birth Date Form */}
       <div className="text-center mb-8">
         <label htmlFor="birthdate" className="mr-2">
           Birth Date
@@ -61,39 +63,72 @@ export default function Calendar() {
         />
       </div>
 
-      <div className="space-y-1">
-        <div className="grid grid-cols-53 gap-1">
-          {Array.from({ length: WEEKS_PER_YEAR + 1 }).map((_, week) => (
-            <div key={week} className="w-2 h-2 relative">
-              <span className="absolute -top-4 inset-0 flex justify-center items-center text-[10px]">
-                {(week % 5 === 0 && week !== 0) || week === 1 ? week : ""}
-              </span>
+      {/* Calendar Grid */}
+      <div className="flex flex-col lg:flex-row lg:space-x-8">
+        {/* Left Calendar (0-39 years) */}
+        <div className="space-y-1">
+          <div className="grid grid-cols-53 gap-1">
+            {Array.from({ length: WEEKS_PER_YEAR + 1 }).map((_, week) => (
+              <div key={week} className="w-2 h-2 relative">
+                <span className="absolute -top-4 inset-0 flex justify-center items-center text-[10px]">
+                  {(week % 5 === 0 && week !== 0) || week === 1 ? week : ""}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {Array.from({ length: MAX_YEARS / 2 }).map((_, year) => (
+            <div key={year} className="grid grid-cols-53 gap-1">
+              <div className="relative">
+                <span className="absolute -left-4 inset-0 flex justify-center items-center text-[10px]">
+                  {year % 5 === 0 ? year : ""}
+                </span>
+              </div>
+
+              {Array.from({ length: WEEKS_PER_YEAR }).map((_, week) => {
+                const isLived = year * WEEKS_PER_YEAR + week < livedWeeks;
+                const isCurrent = year * WEEKS_PER_YEAR + week === livedWeeks;
+                return (
+                  <Cell key={week} isLived={isLived} isCurrent={isCurrent} />
+                );
+              })}
             </div>
           ))}
         </div>
 
-        {Array.from({ length: MAX_YEARS }).map((_, year) => (
-          <div key={year} className="grid grid-cols-53 gap-1">
-            <div className="relative">
-              <span className="absolute -left-4 inset-0 flex justify-center items-center text-[10px]">
-                {year % 5 === 0 ? year : ""}
-              </span>
-            </div>
-
-            {Array.from({ length: WEEKS_PER_YEAR }).map((_, week) => (
-              <div
-                key={week}
-                className={`w-3 h-3 transition ${
-                  year * WEEKS_PER_YEAR + week < livedWeeks
-                    ? "bg-gray-800"
-                    : year * WEEKS_PER_YEAR + week === livedWeeks
-                    ? "bg-green-500 animate-bounce"
-                    : "bg-gray-300"
-                }`}
-              />
+        {/* Right Calendar (40-79 years) */}
+        <div className="space-y-1 mt-8 lg:mt-0">
+          <div className="grid grid-cols-53 gap-1">
+            {Array.from({ length: WEEKS_PER_YEAR + 1 }).map((_, week) => (
+              <div key={week} className="w-2 h-2 relative">
+                <span className="absolute -top-4 inset-0 flex justify-center items-center text-[10px]">
+                  {(week % 5 === 0 && week !== 0) || week === 1 ? week : ""}
+                </span>
+              </div>
             ))}
           </div>
-        ))}
+
+          {Array.from({ length: MAX_YEARS / 2 }).map((_, index) => {
+            const year = index + MAX_YEARS / 2;
+            return (
+              <div key={year} className="grid grid-cols-53 gap-1">
+                <div className="relative">
+                  <span className="absolute -left-4 inset-0 flex justify-center items-center text-[10px]">
+                    {year % 5 === 0 ? year : ""}
+                  </span>
+                </div>
+
+                {Array.from({ length: WEEKS_PER_YEAR }).map((_, week) => {
+                  const isLived = year * WEEKS_PER_YEAR + week < livedWeeks;
+                  const isCurrent = year * WEEKS_PER_YEAR + week === livedWeeks;
+                  return (
+                    <Cell key={week} isLived={isLived} isCurrent={isCurrent} />
+                  );
+                })}
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
