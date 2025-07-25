@@ -10,5 +10,5 @@ export default function Cell({ isLived, isCurrent }: CellProps) {
     ? "bg-green-500 animate-bounce"
     : "bg-gray-300";
 
-  return <div className={`w-2 h-2 transition ${cellColor}`} />;
+  return <div className={`w-[10px] h-[10px] transition ${cellColor}`} />;
 }
