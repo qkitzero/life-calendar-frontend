@@ -73,6 +73,11 @@ export default function Calendar() {
                 <span className="absolute -top-4 inset-0 flex justify-center items-center text-[10px]">
                   {(week % 5 === 0 && week !== 0) || week === 1 ? week : ""}
                 </span>
+                {week === WEEKS_PER_YEAR && (
+                  <span className="absolute -top-4 inset-0 flex items-center text-xs">
+                    Week
+                  </span>
+                )}
               </div>
             ))}
           </div>
@@ -83,6 +88,11 @@ export default function Calendar() {
                 <span className="absolute -left-4 inset-0 flex justify-center items-center text-[10px]">
                   {year % 5 === 0 ? year : ""}
                 </span>
+                {year === MAX_YEARS / 2 - 1 && (
+                  <span className="absolute -left-4 inset-0 flex items-center justify-center text-xs">
+                    Age
+                  </span>
+                )}
               </div>
 
               {Array.from({ length: WEEKS_PER_YEAR }).map((_, week) => {
@@ -104,6 +114,11 @@ export default function Calendar() {
                 <span className="absolute -top-4 inset-0 flex justify-center items-center text-[10px]">
                   {(week % 5 === 0 && week !== 0) || week === 1 ? week : ""}
                 </span>
+                {week === WEEKS_PER_YEAR && (
+                  <span className="absolute -top-4 inset-0 flex items-center text-xs">
+                    Week
+                  </span>
+                )}
               </div>
             ))}
           </div>
@@ -116,6 +131,11 @@ export default function Calendar() {
                   <span className="absolute -left-4 inset-0 flex justify-center items-center text-[10px]">
                     {year % 5 === 0 ? year : ""}
                   </span>
+                  {year === MAX_YEARS - 1 && (
+                    <span className="absolute -left-4 inset-0 flex items-center justify-center text-xs">
+                      Age
+                    </span>
+                  )}
                 </div>
 
                 {Array.from({ length: WEEKS_PER_YEAR }).map((_, week) => {
