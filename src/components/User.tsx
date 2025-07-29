@@ -7,6 +7,9 @@ export default function User() {
     return (
       <div className="flex flex-col items-center">
         <span className="text-gray-700">Guest User</span>
+        <span className="text-gray-500 text-xs">
+          xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+        </span>
       </div>
     );
   }
