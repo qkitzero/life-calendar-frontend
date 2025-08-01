@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect, useRef } from "react";
 import { useUser } from "@/context/UserContext";
 import User from "@/components/User";
 import LoginButton from "@/components/LoginButton";
@@ -8,6 +9,20 @@ import Link from "next/link";
 
 export default function Header() {
   const { user } = useUser();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsMenuOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [menuRef]);
 
   return (
     <header className="w-full flex justify-between items-center py-4 border-b mb-8">
@@ -15,9 +30,36 @@ export default function Header() {
         Life Calendar
       </Link>
 
-      <div className="flex items-center gap-4">
-        <User />
-        {user ? <LogoutButton /> : <LoginButton />}
+      <div className="relative" ref={menuRef}>
+        <button
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className="flex items-center gap-2 cursor-pointer"
+        >
+          <User />
+        </button>
+        {isMenuOpen && (
+          <div className="absolute mt-2 w-full bg-white rounded-md shadow-lg py-2 z-10">
+            <Link
+              href="/"
+              className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            >
+              Life Calendar
+            </Link>
+            {user ? (
+              <>
+                <Link
+                  href="/update"
+                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  Update Profile
+                </Link>
+                <LogoutButton />
+              </>
+            ) : (
+              <LoginButton />
+            )}
+          </div>
+        )}
       </div>
     </header>
   );
