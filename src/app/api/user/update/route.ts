@@ -15,6 +15,7 @@ export async function POST(req: NextRequest) {
     },
     body: JSON.stringify({
       display_name: body.displayName,
+      birth_date: body.birthDate,
     }),
   });
 
