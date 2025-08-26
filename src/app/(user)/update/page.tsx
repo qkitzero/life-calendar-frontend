@@ -10,7 +10,7 @@ export default function Update() {
   const { refreshUser } = useUser();
 
   const [displayName, setDisplayName] = useState("");
-  // const [birthDate, setBirthDate] = useState("");
+  const [birthDate, setBirthDate] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -21,9 +21,9 @@ export default function Update() {
     setError("");
     setSuccess(false);
 
-    // const [year, month, day] = birthDate
-    //   .split("-")
-    //   .map((str) => parseInt(str, 10));
+    const [year, month, day] = birthDate
+      .split("-")
+      .map((str) => parseInt(str, 10));
 
     try {
       const res = await fetch("/api/user/update", {
@@ -31,6 +31,11 @@ export default function Update() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           displayName,
+          birthDate: {
+            year,
+            month,
+            day,
+          },
         }),
       });
 
@@ -75,7 +80,7 @@ export default function Update() {
           />
         </div>
 
-        {/* <div>
+        <div>
           <label htmlFor="birthDate" className="block mb-1">
             Birth Date
           </label>
@@ -87,7 +92,7 @@ export default function Update() {
             required
             className="w-full border p-2 rounded"
           />
-        </div> */}
+        </div>
 
         <button
           type="submit"
