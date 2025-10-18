@@ -61,7 +61,7 @@ export default function Calendar() {
         birthDate.getMonth(),
         birthDate.getDate() - 1
       ),
-      color: "bg-blue-500",
+      color: "#3b82f6",
     },
     {
       title: "Secondary Education",
@@ -76,7 +76,7 @@ export default function Calendar() {
         birthDate.getMonth(),
         birthDate.getDate() - 1
       ),
-      color: "bg-green-500",
+      color: "#22c55e",
     },
     {
       title: "Higher Education",
@@ -91,7 +91,7 @@ export default function Calendar() {
         birthDate.getMonth(),
         birthDate.getDate() - 1
       ),
-      color: "bg-yellow-500",
+      color: "#eab308",
     },
   ];
 

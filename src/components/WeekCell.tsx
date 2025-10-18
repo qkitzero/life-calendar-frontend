@@ -14,6 +14,40 @@ type WeekCellProps = {
   weekEndDate: Date;
 };
 
+const averageColors = (colors: string[]): string => {
+  if (colors.length === 0) {
+    return "";
+  }
+
+  const colorComponents = colors.map((color) => {
+    const hex = color.replace("#", "");
+    const r = parseInt(hex.substring(0, 2), 16);
+    const g = parseInt(hex.substring(2, 4), 16);
+    const b = parseInt(hex.substring(4, 6), 16);
+    return { r, g, b };
+  });
+
+  const avgComponents = colorComponents.reduce(
+    (acc, c) => {
+      acc.r += c.r;
+      acc.g += c.g;
+      acc.b += c.b;
+      return acc;
+    },
+    { r: 0, g: 0, b: 0 }
+  );
+
+  avgComponents.r = Math.round(avgComponents.r / colors.length);
+  avgComponents.g = Math.round(avgComponents.g / colors.length);
+  avgComponents.b = Math.round(avgComponents.b / colors.length);
+
+  const toHex = (c: number) => ("0" + c.toString(16)).slice(-2);
+
+  return `#${toHex(avgComponents.r)}${toHex(avgComponents.g)}${toHex(
+    avgComponents.b
+  )}`;
+};
+
 export default function WeekCell({
   isLived,
   isCurrent,
@@ -21,13 +55,20 @@ export default function WeekCell({
   weekStartDate,
   weekEndDate,
 }: WeekCellProps) {
-  let color = "bg-gray-300";
-  if (events.length > 0) {
-    color = events[0].color;
+  let style = {};
+  let className = "w-[10px] h-[10px] transition cursor-pointer";
+
+  if (events.length === 1) {
+    style = { backgroundColor: events[0].color };
+  } else if (events.length > 1) {
+    const avgColor = averageColors(events.map((e) => e.color));
+    style = { backgroundColor: avgColor };
   } else if (isCurrent) {
-    color = "bg-gray-800 animate-bounce";
+    className += " bg-gray-800 animate-bounce";
   } else if (isLived) {
-    color = "bg-gray-800";
+    className += " bg-gray-800";
+  } else {
+    className += " bg-gray-300";
   }
 
   let tooltipText = `Week: ${weekStartDate.toLocaleDateString()} ~ ${weekEndDate.toLocaleDateString()}`;
@@ -36,10 +77,5 @@ export default function WeekCell({
     tooltipText += `\nEvents: ${eventTitles}`;
   }
 
-  return (
-    <div
-      className={`w-[10px] h-[10px] transition ${color} cursor-pointer`}
-      title={tooltipText}
-    />
-  );
+  return <div className={className} style={style} title={tooltipText} />;
 }
