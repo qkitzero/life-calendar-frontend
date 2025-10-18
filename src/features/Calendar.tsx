@@ -2,7 +2,7 @@
 
 import { useUser } from "@/context/UserContext";
 import { useState, useEffect } from "react";
-import Cell from "@/components/Cell";
+import WeekCell from "@/components/WeekCell";
 
 const MAX_YEARS = 80;
 const WEEKS_PER_YEAR = 52;
@@ -46,6 +46,54 @@ export default function Calendar() {
   );
   const livedWeeks =
     years * WEEKS_PER_YEAR + Math.floor(daysSinceLastBirthDate / 7);
+
+  const initialEvents = [
+    {
+      title: "Primary Education",
+      description: "Ages 6 to 12",
+      startDate: new Date(
+        birthDate.getFullYear() + 6,
+        birthDate.getMonth(),
+        birthDate.getDate()
+      ),
+      endDate: new Date(
+        birthDate.getFullYear() + 12,
+        birthDate.getMonth(),
+        birthDate.getDate() - 1
+      ),
+      color: "#3b82f6",
+    },
+    {
+      title: "Secondary Education",
+      description: "Ages 12 to 18",
+      startDate: new Date(
+        birthDate.getFullYear() + 12,
+        birthDate.getMonth(),
+        birthDate.getDate()
+      ),
+      endDate: new Date(
+        birthDate.getFullYear() + 18,
+        birthDate.getMonth(),
+        birthDate.getDate() - 1
+      ),
+      color: "#22c55e",
+    },
+    {
+      title: "Higher Education",
+      description: "Ages 18 to 22",
+      startDate: new Date(
+        birthDate.getFullYear() + 18,
+        birthDate.getMonth(),
+        birthDate.getDate()
+      ),
+      endDate: new Date(
+        birthDate.getFullYear() + 22,
+        birthDate.getMonth(),
+        birthDate.getDate() - 1
+      ),
+      color: "#eab308",
+    },
+  ];
 
   return (
     <div className="flex flex-col items-center">
@@ -98,8 +146,31 @@ export default function Calendar() {
               {Array.from({ length: WEEKS_PER_YEAR }).map((_, week) => {
                 const isLived = year * WEEKS_PER_YEAR + week < livedWeeks;
                 const isCurrent = year * WEEKS_PER_YEAR + week === livedWeeks;
+                const weekStartDate = new Date(
+                  birthDate.getFullYear() + year,
+                  birthDate.getMonth(),
+                  birthDate.getDate() + week * 7
+                );
+                const weekEndDate = new Date(
+                  birthDate.getFullYear() + year,
+                  birthDate.getMonth(),
+                  birthDate.getDate() + (week + 1) * 7 - 1
+                );
+                const events = initialEvents.filter((event) => {
+                  return (
+                    event.startDate <= weekEndDate &&
+                    event.endDate >= weekStartDate
+                  );
+                });
                 return (
-                  <Cell key={week} isLived={isLived} isCurrent={isCurrent} />
+                  <WeekCell
+                    key={week}
+                    isLived={isLived}
+                    isCurrent={isCurrent}
+                    events={events}
+                    weekStartDate={weekStartDate}
+                    weekEndDate={weekEndDate}
+                  />
                 );
               })}
             </div>
@@ -141,8 +212,31 @@ export default function Calendar() {
                 {Array.from({ length: WEEKS_PER_YEAR }).map((_, week) => {
                   const isLived = year * WEEKS_PER_YEAR + week < livedWeeks;
                   const isCurrent = year * WEEKS_PER_YEAR + week === livedWeeks;
+                  const weekStartDate = new Date(
+                    birthDate.getFullYear() + year,
+                    birthDate.getMonth(),
+                    birthDate.getDate() + week * 7
+                  );
+                  const weekEndDate = new Date(
+                    birthDate.getFullYear() + year,
+                    birthDate.getMonth(),
+                    birthDate.getDate() + (week + 1) * 7 - 1
+                  );
+                  const events = initialEvents.filter((event) => {
+                    return (
+                      event.startDate <= weekEndDate &&
+                      event.endDate >= weekStartDate
+                    );
+                  });
                   return (
-                    <Cell key={week} isLived={isLived} isCurrent={isCurrent} />
+                    <WeekCell
+                      key={week}
+                      isLived={isLived}
+                      isCurrent={isCurrent}
+                      events={events}
+                      weekStartDate={weekStartDate}
+                      weekEndDate={weekEndDate}
+                    />
                   );
                 })}
               </div>
