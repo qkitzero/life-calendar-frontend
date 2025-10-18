@@ -58,13 +58,14 @@ export default function WeekCell({
   let style = {};
   let className = "w-[10px] h-[10px] transition cursor-pointer";
 
-  if (events.length === 1) {
-    style = { backgroundColor: events[0].color };
-  } else if (events.length > 1) {
+  if (isCurrent) {
+    className += " border-1 border-gray-800 bg-green-500 animate-bounce";
+  } else if (events.length > 0) {
     const avgColor = averageColors(events.map((e) => e.color));
     style = { backgroundColor: avgColor };
-  } else if (isCurrent) {
-    className += " bg-gray-800 animate-bounce";
+    if (isLived) {
+      className += " border-1 border-gray-800";
+    }
   } else if (isLived) {
     className += " bg-gray-800";
   } else {
