@@ -49,7 +49,7 @@ export default function Calendar() {
 
   const initialEvents = [
     {
-      title: "Primary Education",
+      title: "Elementary School",
       description: "Ages 6 to 12",
       startDate: new Date(
         birthDate.getFullYear() + 6,
@@ -61,13 +61,28 @@ export default function Calendar() {
         birthDate.getMonth(),
         birthDate.getDate() - 1
       ),
-      color: "#3b82f6",
+      color: "#fca5a5",
     },
     {
-      title: "Secondary Education",
-      description: "Ages 12 to 18",
+      title: "Middle School",
+      description: "Ages 12 to 15",
       startDate: new Date(
         birthDate.getFullYear() + 12,
+        birthDate.getMonth(),
+        birthDate.getDate()
+      ),
+      endDate: new Date(
+        birthDate.getFullYear() + 15,
+        birthDate.getMonth(),
+        birthDate.getDate() - 1
+      ),
+      color: "#93c5fd",
+    },
+    {
+      title: "High School",
+      description: "Ages 15 to 18",
+      startDate: new Date(
+        birthDate.getFullYear() + 15,
         birthDate.getMonth(),
         birthDate.getDate()
       ),
@@ -76,10 +91,10 @@ export default function Calendar() {
         birthDate.getMonth(),
         birthDate.getDate() - 1
       ),
-      color: "#22c55e",
+      color: "#fde047",
     },
     {
-      title: "Higher Education",
+      title: "University",
       description: "Ages 18 to 22",
       startDate: new Date(
         birthDate.getFullYear() + 18,
@@ -91,7 +106,22 @@ export default function Calendar() {
         birthDate.getMonth(),
         birthDate.getDate() - 1
       ),
-      color: "#eab308",
+      color: "#a7f3d0",
+    },
+    {
+      title: "First Job",
+      description: "Ages 22 to 25",
+      startDate: new Date(
+        birthDate.getFullYear() + 22,
+        birthDate.getMonth(),
+        birthDate.getDate()
+      ),
+      endDate: new Date(
+        birthDate.getFullYear() + 25,
+        birthDate.getMonth(),
+        birthDate.getDate() - 1
+      ),
+      color: "#d8b4fe",
     },
   ];
 
