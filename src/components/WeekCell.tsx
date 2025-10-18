@@ -38,7 +38,7 @@ export default function WeekCell({
 
   return (
     <div
-      className={`w-[10px] h-[10px] transition ${color}`}
+      className={`w-[10px] h-[10px] transition ${color} cursor-pointer`}
       title={tooltipText}
     />
   );
