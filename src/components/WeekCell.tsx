@@ -59,10 +59,13 @@ export default function WeekCell({
   let className = "w-[10px] h-[10px] transition cursor-pointer";
 
   if (isCurrent) {
-    className += " bg-green-500 animate-bounce";
+    className += " border-1 border-gray-800 bg-green-500 animate-bounce";
   } else if (events.length > 0) {
     const avgColor = averageColors(events.map((e) => e.color));
     style = { backgroundColor: avgColor };
+    if (isLived) {
+      className += " border-1 border-gray-800";
+    }
   } else if (isLived) {
     className += " bg-gray-800";
   } else {
