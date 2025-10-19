@@ -105,6 +105,12 @@ export default function EventManager({
     handleCloseModal();
   };
 
+  const handleDeleteEvent = () => {
+    if (!editingEvent) return;
+    onEventsChange(events.filter((event) => event.id !== editingEvent.id));
+    handleCloseModal();
+  };
+
   return (
     <div className="mb-8">
       <div className="flex flex-wrap space-x-2 space-y-2 overflow-x-auto">
@@ -126,7 +132,7 @@ export default function EventManager({
 
       {isModalOpen && (
         <div className="absolute inset-0 flex justify-center z-10">
-          <div className="max-w-lg mx-auto p-8 rounded-md shadow-lg bg-white">
+          <div className="w-lg mx-auto p-8 rounded-md shadow-lg bg-white">
             <h2 className="text-2xl font-semibold mb-4 text-center">
               {editingEvent ? "Edit Event" : "Create Event"}
             </h2>
@@ -201,20 +207,32 @@ export default function EventManager({
                 />
               </div>
 
-              <button
-                type="submit"
-                className="w-full bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
-              >
-                {editingEvent ? "Update Event" : "Create Event"}
-              </button>
+              <div className="flex space-x-2">
+                {editingEvent && (
+                  <button
+                    type="button"
+                    className="w-full bg-red-500 text-white py-2 rounded hover:bg-red-600"
+                    onClick={handleDeleteEvent}
+                  >
+                    Delete Event
+                  </button>
+                )}
 
-              <button
-                type="button"
-                onClick={handleCloseModal}
-                className="w-full bg-gray-300 text-black py-2 px-4 rounded hover:bg-gray-400"
-              >
-                Cancel
-              </button>
+                <button
+                  type="button"
+                  className="w-full bg-gray-300 text-black py-2 rounded hover:bg-gray-400"
+                  onClick={handleCloseModal}
+                >
+                  Cancel
+                </button>
+
+                <button
+                  type="submit"
+                  className="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600"
+                >
+                  {editingEvent ? "Update Event" : "Create Event"}
+                </button>
+              </div>
             </form>
           </div>
         </div>
