@@ -19,9 +19,19 @@ export default function EventManager({
   const [description, setDescription] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [color, setColor] = useState("#D1D5DB");
+  const [color, setColor] = useState("#1e2939");
 
-  const handleOpenModal = (event: Event) => {
+  const handleOpenCreateModal = () => {
+    setEditingEvent(null);
+    setTitle("New Event");
+    setDescription("New Event Description");
+    setStartDate(new Date().toISOString().split("T")[0]);
+    setEndDate(new Date().toISOString().split("T")[0]);
+    setColor("#1e2939");
+    setIsModalOpen(true);
+  };
+
+  const handleOpenEditModal = (event: Event) => {
     setEditingEvent(event);
     setTitle(event.title);
     setDescription(event.description);
@@ -34,6 +44,46 @@ export default function EventManager({
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setEditingEvent(null);
+  };
+
+  const handleCreateEvent = async (e: React.FormEvent) => {
+    e.preventDefault();
+    // const newEvent: Omit<Event, "id"> = {
+    //   title,
+    //   description,
+    //   startDate: new Date(startDate),
+    //   endDate: new Date(endDate),
+    //   color,
+    // };
+    const newEvent: Event = {
+      id: Math.random().toString(),
+      title,
+      description,
+      startDate: new Date(startDate),
+      endDate: new Date(endDate),
+      color,
+    };
+
+    try {
+      // const res = await fetch("/api/event/create", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(newEvent),
+      // });
+
+      // if (!res.ok) {
+      //   const errData = await res.json();
+      //   throw new Error(errData.message || "Event create failed");
+      // }
+
+      // const createdEvent = await res.json();
+      onEventsChange([...events, newEvent]);
+      handleCloseModal();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleUpdateEvent = async (e: React.FormEvent) => {
@@ -63,21 +113,27 @@ export default function EventManager({
             key={event.id}
             className="w-8 h-8 flex items-center justify-center cursor-pointer"
             style={{ backgroundColor: event.color }}
-            onClick={() => handleOpenModal(event)}
+            onClick={() => handleOpenEditModal(event)}
           ></div>
         ))}
-        <button className="w-8 h-8 flex items-center justify-center cursor-pointer bg-gray-300 ">
+        <button
+          className="w-8 h-8 flex items-center justify-center cursor-pointer bg-gray-300"
+          onClick={handleOpenCreateModal}
+        >
           +
         </button>
       </div>
 
-      {isModalOpen && editingEvent && (
+      {isModalOpen && (
         <div className="absolute inset-0 flex justify-center z-10">
           <div className="max-w-lg mx-auto p-8 rounded-md shadow-lg bg-white">
             <h2 className="text-2xl font-semibold mb-4 text-center">
-              Edit Event
+              {editingEvent ? "Edit Event" : "Create Event"}
             </h2>
-            <form onSubmit={handleUpdateEvent} className="space-y-4">
+            <form
+              onSubmit={editingEvent ? handleUpdateEvent : handleCreateEvent}
+              className="space-y-4"
+            >
               <div>
                 <label htmlFor="title" className="block mb-1">
                   Title
@@ -149,7 +205,7 @@ export default function EventManager({
                 type="submit"
                 className="w-full bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
               >
-                Update Event
+                {editingEvent ? "Update Event" : "Create Event"}
               </button>
 
               <button
