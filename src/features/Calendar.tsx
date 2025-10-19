@@ -136,7 +136,7 @@ export default function Calendar() {
   }, [birthDateStr]);
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center relative">
       {/* Birth Date Form */}
       <div className="mb-4">
         <label htmlFor="birthdate" className="mr-2">
