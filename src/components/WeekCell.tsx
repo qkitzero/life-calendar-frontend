@@ -50,7 +50,7 @@ export default function WeekCell({
   weekEndDate,
 }: WeekCellProps) {
   let style = {};
-  let className = "w-[10px] h-[10px] transition cursor-pointer";
+  let className = "w-[10px] h-[10px] transition";
 
   if (isCurrent) {
     className += " border-1 border-gray-800 bg-green-500 animate-bounce";
