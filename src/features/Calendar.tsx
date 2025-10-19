@@ -2,13 +2,16 @@
 
 import { useUser } from "@/context/UserContext";
 import { useState, useEffect } from "react";
-import Cell from "@/components/Cell";
+import WeekCell from "@/components/WeekCell";
+import EventManager from "@/components/EventManager";
+import { Event } from "@/types/event";
 
 const MAX_YEARS = 80;
 const WEEKS_PER_YEAR = 52;
 
 export default function Calendar() {
   const [birthDateStr, setBirthDateStr] = useState("2000-01-01");
+  const [events, setEvents] = useState<Event[]>([]);
 
   const { user } = useUser();
 
@@ -47,10 +50,95 @@ export default function Calendar() {
   const livedWeeks =
     years * WEEKS_PER_YEAR + Math.floor(daysSinceLastBirthDate / 7);
 
+  useEffect(() => {
+    setEvents([
+      {
+        id: "1",
+        title: "Elementary School",
+        description: "Ages 6 to 12",
+        startDate: new Date(
+          birthDate.getFullYear() + 6,
+          birthDate.getMonth(),
+          birthDate.getDate()
+        ),
+        endDate: new Date(
+          birthDate.getFullYear() + 12,
+          birthDate.getMonth(),
+          birthDate.getDate() - 1
+        ),
+        color: "#fca5a5",
+      },
+      {
+        id: "2",
+        title: "Middle School",
+        description: "Ages 12 to 15",
+        startDate: new Date(
+          birthDate.getFullYear() + 12,
+          birthDate.getMonth(),
+          birthDate.getDate()
+        ),
+        endDate: new Date(
+          birthDate.getFullYear() + 15,
+          birthDate.getMonth(),
+          birthDate.getDate() - 1
+        ),
+        color: "#93c5fd",
+      },
+      {
+        id: "3",
+        title: "High School",
+        description: "Ages 15 to 18",
+        startDate: new Date(
+          birthDate.getFullYear() + 15,
+          birthDate.getMonth(),
+          birthDate.getDate()
+        ),
+        endDate: new Date(
+          birthDate.getFullYear() + 18,
+          birthDate.getMonth(),
+          birthDate.getDate() - 1
+        ),
+        color: "#fde047",
+      },
+      {
+        id: "4",
+        title: "University",
+        description: "Ages 18 to 22",
+        startDate: new Date(
+          birthDate.getFullYear() + 18,
+          birthDate.getMonth(),
+          birthDate.getDate()
+        ),
+        endDate: new Date(
+          birthDate.getFullYear() + 22,
+          birthDate.getMonth(),
+          birthDate.getDate() - 1
+        ),
+        color: "#a7f3d0",
+      },
+      {
+        id: "5",
+        title: "First Job",
+        description: "Ages 22 to 25",
+        startDate: new Date(
+          birthDate.getFullYear() + 22,
+          birthDate.getMonth(),
+          birthDate.getDate()
+        ),
+        endDate: new Date(
+          birthDate.getFullYear() + 25,
+          birthDate.getMonth(),
+          birthDate.getDate() - 1
+        ),
+        color: "#d8b4fe",
+      },
+    ]);
+  }, [birthDateStr]);
+
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center relative">
       {/* Birth Date Form */}
-      <div className="text-center mb-8">
+      <div className="mb-4">
         <label htmlFor="birthdate" className="mr-2">
           Birth Date
         </label>
@@ -62,6 +150,8 @@ export default function Calendar() {
           className="border p-2 rounded"
         />
       </div>
+
+      <EventManager events={events} onEventsChange={setEvents} />
 
       {/* Calendar Grid */}
       <div className="flex flex-col lg:flex-row lg:space-x-8">
@@ -98,8 +188,31 @@ export default function Calendar() {
               {Array.from({ length: WEEKS_PER_YEAR }).map((_, week) => {
                 const isLived = year * WEEKS_PER_YEAR + week < livedWeeks;
                 const isCurrent = year * WEEKS_PER_YEAR + week === livedWeeks;
+                const weekStartDate = new Date(
+                  birthDate.getFullYear() + year,
+                  birthDate.getMonth(),
+                  birthDate.getDate() + week * 7
+                );
+                const weekEndDate = new Date(
+                  birthDate.getFullYear() + year,
+                  birthDate.getMonth(),
+                  birthDate.getDate() + (week + 1) * 7 - 1
+                );
+                const filteredEvents = events.filter((event) => {
+                  return (
+                    event.startDate <= weekEndDate &&
+                    event.endDate >= weekStartDate
+                  );
+                });
                 return (
-                  <Cell key={week} isLived={isLived} isCurrent={isCurrent} />
+                  <WeekCell
+                    key={week}
+                    isLived={isLived}
+                    isCurrent={isCurrent}
+                    events={filteredEvents}
+                    weekStartDate={weekStartDate}
+                    weekEndDate={weekEndDate}
+                  />
                 );
               })}
             </div>
@@ -141,8 +254,31 @@ export default function Calendar() {
                 {Array.from({ length: WEEKS_PER_YEAR }).map((_, week) => {
                   const isLived = year * WEEKS_PER_YEAR + week < livedWeeks;
                   const isCurrent = year * WEEKS_PER_YEAR + week === livedWeeks;
+                  const weekStartDate = new Date(
+                    birthDate.getFullYear() + year,
+                    birthDate.getMonth(),
+                    birthDate.getDate() + week * 7
+                  );
+                  const weekEndDate = new Date(
+                    birthDate.getFullYear() + year,
+                    birthDate.getMonth(),
+                    birthDate.getDate() + (week + 1) * 7 - 1
+                  );
+                  const filteredEvents = events.filter((event) => {
+                    return (
+                      event.startDate <= weekEndDate &&
+                      event.endDate >= weekStartDate
+                    );
+                  });
                   return (
-                    <Cell key={week} isLived={isLived} isCurrent={isCurrent} />
+                    <WeekCell
+                      key={week}
+                      isLived={isLived}
+                      isCurrent={isCurrent}
+                      events={filteredEvents}
+                      weekStartDate={weekStartDate}
+                      weekEndDate={weekEndDate}
+                    />
                   );
                 })}
               </div>
