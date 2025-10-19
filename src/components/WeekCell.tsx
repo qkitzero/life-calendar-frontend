@@ -1,10 +1,4 @@
-type Event = {
-  title: string;
-  description: string;
-  startDate: Date;
-  endDate: Date;
-  color: string;
-};
+import { Event } from "@/types/event";
 
 type WeekCellProps = {
   isLived: boolean;
