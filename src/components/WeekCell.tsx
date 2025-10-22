@@ -66,7 +66,9 @@ export default function WeekCell({
     className += " bg-gray-300";
   }
 
-  let tooltipText = `Week: ${weekStartDate.toLocaleDateString()} ~ ${weekEndDate.toLocaleDateString()}`;
+  let tooltipText = `Week: ${weekStartDate.toISOString().split("T")[0]} ~ ${
+    weekEndDate.toISOString().split("T")[0]
+  }`;
   if (events.length > 0) {
     const eventTitles = events.map((e) => e.title).join(", ");
     tooltipText += `\nEvents: ${eventTitles}`;
