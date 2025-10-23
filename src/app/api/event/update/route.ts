@@ -17,7 +17,6 @@ export async function POST(req: NextRequest) {
       },
       body: JSON.stringify({
         event: {
-          id: body.id,
           title: body.title,
           description: body.description,
           startTime: body.startTimeISO,
