@@ -2,7 +2,7 @@ export interface Event {
   id: string;
   title: string;
   description: string;
-  startDate: Date;
-  endDate: Date;
+  startTime: Date;
+  endTime: Date;
   color: string;
 }

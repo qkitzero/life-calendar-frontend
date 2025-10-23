@@ -17,16 +17,16 @@ export default function EventManager({
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
   const [color, setColor] = useState("#1e2939");
 
   const handleOpenCreateModal = () => {
     setEditingEvent(null);
     setTitle("New Event");
     setDescription("New Event Description");
-    setStartDate(new Date().toISOString().split("T")[0]);
-    setEndDate(new Date().toISOString().split("T")[0]);
+    setStartTime(new Date().toISOString().split("T")[0]);
+    setEndTime(new Date().toISOString().split("T")[0]);
     setColor("#1e2939");
     setIsModalOpen(true);
   };
@@ -35,8 +35,8 @@ export default function EventManager({
     setEditingEvent(event);
     setTitle(event.title);
     setDescription(event.description);
-    setStartDate(event.startDate.toISOString().split("T")[0]);
-    setEndDate(event.endDate.toISOString().split("T")[0]);
+    setStartTime(event.startTime.toISOString().split("T")[0]);
+    setEndTime(event.endTime.toISOString().split("T")[0]);
     setColor(event.color);
     setIsModalOpen(true);
   };
@@ -95,8 +95,8 @@ export default function EventManager({
             ...event,
             title,
             description,
-            startDate: new Date(startDate),
-            endDate: new Date(endDate),
+            startTime: new Date(startTime),
+            endTime: new Date(endTime),
             color,
           }
         : event
@@ -167,28 +167,28 @@ export default function EventManager({
               </div>
 
               <div>
-                <label htmlFor="startDate" className="block mb-1">
+                <label htmlFor="startTime" className="block mb-1">
                   Start Date
                 </label>
                 <input
-                  id="startDate"
+                  id="startTime"
                   type="date"
-                  value={startDate}
-                  onChange={(e) => setStartDate(e.target.value)}
+                  value={startTime}
+                  onChange={(e) => setStartTime(e.target.value)}
                   required
                   className="w-full border p-2 rounded"
                 />
               </div>
 
               <div>
-                <label htmlFor="endDate" className="block mb-1">
+                <label htmlFor="endTime" className="block mb-1">
                   End Date
                 </label>
                 <input
-                  id="endDate"
+                  id="endTime"
                   type="date"
-                  value={endDate}
-                  onChange={(e) => setEndDate(e.target.value)}
+                  value={endTime}
+                  onChange={(e) => setEndTime(e.target.value)}
                   required
                   className="w-full border p-2 rounded"
                 />

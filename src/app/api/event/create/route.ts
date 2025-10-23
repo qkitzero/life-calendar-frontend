@@ -16,8 +16,8 @@ export async function POST(req: NextRequest) {
     body: JSON.stringify({
       title: body.title,
       description: body.description,
-      startTime: body.startDateISO,
-      endTime: body.endDateISO,
+      startTime: body.startTimeISO,
+      endTime: body.endTimeISO,
     }),
   });
 

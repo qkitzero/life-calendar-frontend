@@ -4,8 +4,8 @@ type WeekCellProps = {
   isLived: boolean;
   isCurrent: boolean;
   events: Event[];
-  weekStartDate: Date;
-  weekEndDate: Date;
+  weekStartTime: Date;
+  weekEndTime: Date;
 };
 
 const averageColors = (colors: string[]): string => {
@@ -46,8 +46,8 @@ export default function WeekCell({
   isLived,
   isCurrent,
   events,
-  weekStartDate,
-  weekEndDate,
+  weekStartTime,
+  weekEndTime,
 }: WeekCellProps) {
   let style = {};
   let className = "w-[10px] h-[10px] transition";
@@ -66,8 +66,8 @@ export default function WeekCell({
     className += " bg-gray-300";
   }
 
-  let tooltipText = `Week: ${weekStartDate.toISOString().split("T")[0]} ~ ${
-    weekEndDate.toISOString().split("T")[0]
+  let tooltipText = `Week: ${weekStartTime.toISOString().split("T")[0]} ~ ${
+    weekEndTime.toISOString().split("T")[0]
   }`;
   if (events.length > 0) {
     const eventTitles = events.map((e) => e.title).join(", ");
