@@ -1,5 +1,6 @@
 "use client";
 
+import { useUser } from "@/context/UserContext";
 import { Event } from "@/types/event";
 import { useState } from "react";
 
@@ -12,21 +13,23 @@ export default function EventManager({
   events,
   onEventsChange,
 }: EventManagerProps) {
+  const { user } = useUser();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingEvent, setEditingEvent] = useState<Event | null>(null);
-
+  const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
   const [color, setColor] = useState("#1e2939");
 
   const handleOpenCreateModal = () => {
     setEditingEvent(null);
     setTitle("New Event");
     setDescription("New Event Description");
-    setStartDate(new Date().toISOString().split("T")[0]);
-    setEndDate(new Date().toISOString().split("T")[0]);
+    setStartTime(new Date().toISOString().split("T")[0]);
+    setEndTime(new Date().toISOString().split("T")[0]);
     setColor("#1e2939");
     setIsModalOpen(true);
   };
@@ -35,8 +38,8 @@ export default function EventManager({
     setEditingEvent(event);
     setTitle(event.title);
     setDescription(event.description);
-    setStartDate(event.startDate.toISOString().split("T")[0]);
-    setEndDate(event.endDate.toISOString().split("T")[0]);
+    setStartTime(event.startTime.toISOString().split("T")[0]);
+    setEndTime(event.endTime.toISOString().split("T")[0]);
     setColor(event.color);
     setIsModalOpen(true);
   };
@@ -48,67 +51,176 @@ export default function EventManager({
 
   const handleCreateEvent = async (e: React.FormEvent) => {
     e.preventDefault();
-    // const newEvent: Omit<Event, "id"> = {
-    //   title,
-    //   description,
-    //   startDate: new Date(startDate),
-    //   endDate: new Date(endDate),
-    //   color,
-    // };
-    const newEvent: Event = {
-      id: Math.random().toString(),
-      title,
-      description,
-      startDate: new Date(startDate),
-      endDate: new Date(endDate),
-      color,
-    };
+    if (loading) return;
+    setLoading(true);
+    if (user) {
+      try {
+        const startTimeISO = new Date(startTime).toISOString();
+        const endTimeISO = new Date(endTime).toISOString();
+        const res = await fetch("/api/event/create", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title,
+            description,
+            startTimeISO,
+            endTimeISO,
+          }),
+        });
 
-    try {
-      // const res = await fetch("/api/event/create", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(newEvent),
-      // });
+        if (!res.ok) {
+          throw new Error("Failed to create event");
+        }
 
-      // if (!res.ok) {
-      //   const errData = await res.json();
-      //   throw new Error(errData.message || "Event create failed");
-      // }
+        const data = await res.json();
 
-      // const createdEvent = await res.json();
-      onEventsChange([...events, newEvent]);
-      handleCloseModal();
-    } catch (error) {
-      console.error(error);
+        const newEvent: Event = {
+          id: data.event.id,
+          title: data.event.title,
+          description: data.event.description,
+          startTime: new Date(data.event.startTime),
+          endTime: new Date(data.event.endTime),
+          color,
+        };
+
+        onEventsChange([...events, newEvent]);
+        handleCloseModal();
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      try {
+        const newEvent: Event = {
+          id: Math.random().toString(),
+          title,
+          description,
+          startTime: new Date(startTime),
+          endTime: new Date(endTime),
+          color,
+        };
+        onEventsChange([...events, newEvent]);
+        handleCloseModal();
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
   const handleUpdateEvent = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!editingEvent) return;
-    const updatedEvents = events.map((event) =>
-      event.id === editingEvent.id
-        ? {
-            ...event,
+    if (loading) return;
+    setLoading(true);
+    if (user) {
+      try {
+        const startTimeISO = new Date(startTime).toISOString();
+        const endTimeISO = new Date(endTime).toISOString();
+        const res = await fetch("/api/event/update", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: editingEvent.id,
             title,
             description,
-            startDate: new Date(startDate),
-            endDate: new Date(endDate),
-            color,
-          }
-        : event
-    );
-    onEventsChange(updatedEvents);
-    handleCloseModal();
+            startTimeISO,
+            endTimeISO,
+          }),
+        });
+
+        if (!res.ok) {
+          throw new Error("Failed to update event");
+        }
+
+        const data = await res.json();
+
+        const updatedEvents = events.map((event) =>
+          event.id === editingEvent.id
+            ? {
+                id: data.event.id,
+                title: data.event.title,
+                description: data.event.description,
+                startTime: new Date(data.event.startTime),
+                endTime: new Date(data.event.endTime),
+                color,
+              }
+            : event
+        );
+        onEventsChange(updatedEvents);
+        handleCloseModal();
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      try {
+        const updatedEvents = events.map((event) =>
+          event.id === editingEvent.id
+            ? {
+                ...event,
+                title,
+                description,
+                startTime: new Date(startTime),
+                endTime: new Date(endTime),
+                color,
+              }
+            : event
+        );
+        onEventsChange(updatedEvents);
+        handleCloseModal();
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    }
   };
 
-  const handleDeleteEvent = () => {
+  const handleDeleteEvent = async () => {
     if (!editingEvent) return;
-    onEventsChange(events.filter((event) => event.id !== editingEvent.id));
-    handleCloseModal();
+    if (loading) return;
+    setLoading(true);
+    if (user) {
+      try {
+        const res = await fetch("/api/event/delete", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: editingEvent.id,
+          }),
+        });
+
+        if (!res.ok) {
+          throw new Error("Failed to delete event");
+        }
+
+        onEventsChange(events.filter((event) => event.id !== editingEvent.id));
+        handleCloseModal();
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      try {
+        onEventsChange(events.filter((event) => event.id !== editingEvent.id));
+        handleCloseModal();
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    }
   };
 
   return (
@@ -167,28 +279,28 @@ export default function EventManager({
               </div>
 
               <div>
-                <label htmlFor="startDate" className="block mb-1">
+                <label htmlFor="startTime" className="block mb-1">
                   Start Date
                 </label>
                 <input
-                  id="startDate"
+                  id="startTime"
                   type="date"
-                  value={startDate}
-                  onChange={(e) => setStartDate(e.target.value)}
+                  value={startTime}
+                  onChange={(e) => setStartTime(e.target.value)}
                   required
                   className="w-full border p-2 rounded"
                 />
               </div>
 
               <div>
-                <label htmlFor="endDate" className="block mb-1">
+                <label htmlFor="endTime" className="block mb-1">
                   End Date
                 </label>
                 <input
-                  id="endDate"
+                  id="endTime"
                   type="date"
-                  value={endDate}
-                  onChange={(e) => setEndDate(e.target.value)}
+                  value={endTime}
+                  onChange={(e) => setEndTime(e.target.value)}
                   required
                   className="w-full border p-2 rounded"
                 />
@@ -228,6 +340,7 @@ export default function EventManager({
 
                 <button
                   type="submit"
+                  disabled={loading}
                   className="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600"
                 >
                   {editingEvent ? "Update Event" : "Create Event"}
