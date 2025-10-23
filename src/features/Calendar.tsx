@@ -51,6 +51,8 @@ export default function Calendar() {
     years * WEEKS_PER_YEAR + Math.floor(daysSinceLastBirthDate / 7);
 
   useEffect(() => {
+    if (user) return;
+
     setEvents([
       {
         id: "1",
@@ -135,6 +137,42 @@ export default function Calendar() {
     ]);
   }, [birthDateStr]);
 
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const res = await fetch("/api/event/list", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        if (!res.ok) {
+          throw new Error("Failed to fetch events");
+        }
+        const data = await res.json();
+        const fetchedEvents = data.events.map((event: Event) => ({
+          id: event.id,
+          title: event.title,
+          description: event.description,
+          startTime: new Date(event.startTime),
+          endTime: new Date(event.endTime),
+          color:
+            event.color ||
+            "#" +
+              Math.floor(Math.random() * 16777215)
+                .toString(16)
+                .padStart(6, "0"),
+        }));
+        setEvents(fetchedEvents);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    if (user) {
+      fetchEvents();
+    }
+  }, [user]);
   return (
     <div className="flex flex-col items-center relative">
       {/* Birth Date Form */}
