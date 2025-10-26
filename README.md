@@ -1,5 +1,7 @@
 # Life Calendar Frontend
 
+[![release](https://img.shields.io/github/v/release/qkitzero/life-calendar-frontend?logo=github)](https://github.com/qkitzero/life-calencdar-frontend/releases)
+
 [life-calendar.qkitzero.xyz](https://life-calendar.qkitzero.xyz)
 
 ```mermaid
@@ -26,6 +28,7 @@ flowchart TD
         auth0(Auth0)
         auth_service(Auth Service)
         user_service(User Service)
+        event_service(Event Service)
     end
 
     build_life_calendar_frontend --> push_life_calendar_frontend --> life_calendar_frontend_image
@@ -37,4 +40,5 @@ flowchart TD
     life_calendar_frontend --> auth0
     life_calendar_frontend --> auth_service
     life_calendar_frontend --> user_service
+    life_calendar_frontend --> event_service
 ```
