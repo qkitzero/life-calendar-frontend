@@ -132,6 +132,7 @@ export default function EventManager({
             description,
             startTimeISO,
             endTimeISO,
+            color,
           }),
         });
 

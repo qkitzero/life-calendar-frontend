@@ -21,6 +21,7 @@ export async function POST(req: NextRequest) {
           description: body.description,
           startTime: body.startTimeISO,
           endTime: body.endTimeISO,
+          color: body.color,
         },
       }),
     }
