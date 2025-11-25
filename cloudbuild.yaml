@@ -1,45 +1,37 @@
 steps:
   - name: gcr.io/cloud-builders/gcloud
-    entrypoint: "bash"
+    entrypoint: bash
     args:
-      [
-        "-c",
-        "gcloud secrets versions access latest --secret=life-calendar-frontend-env-production > .env.production",
-      ]
+      - -c
+      - gcloud secrets versions access latest --secret=life-calendar-frontend-env-production > .env.production
 
-  - name: "gcr.io/cloud-builders/docker"
+  - name: gcr.io/cloud-builders/docker
     args:
-      [
-        "build",
-        "-t",
-        "us-central1-docker.pkg.dev/$PROJECT_ID/life-calendar-frontend/$COMMIT_SHA",
-        ".",
-      ]
+      - build
+      - -t
+      - us-central1-docker.pkg.dev/$PROJECT_ID/life-calendar-frontend/$COMMIT_SHA
+      - .
 
-  - name: "gcr.io/cloud-builders/docker"
+  - name: gcr.io/cloud-builders/docker
     args:
-      [
-        "push",
-        "us-central1-docker.pkg.dev/$PROJECT_ID/life-calendar-frontend/$COMMIT_SHA",
-      ]
+      - push
+      - us-central1-docker.pkg.dev/$PROJECT_ID/life-calendar-frontend/$COMMIT_SHA
 
-  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
     entrypoint: gcloud
     args:
-      [
-        "run",
-        "deploy",
-        "life-calendar-frontend",
-        "--image",
-        "us-central1-docker.pkg.dev/$PROJECT_ID/life-calendar-frontend/$COMMIT_SHA",
-        "--region",
-        "us-central1",
-        "--memory",
-        "512Mi",
-      ]
+      - run
+      - deploy
+      - life-calendar-frontend
+      - --image
+      - us-central1-docker.pkg.dev/$PROJECT_ID/life-calendar-frontend/$COMMIT_SHA
+      - --region
+      - us-central1
+      - --memory
+      - 512Mi
 
 images:
-  - "us-central1-docker.pkg.dev/$PROJECT_ID/life-calendar-frontend/$COMMIT_SHA"
+  - us-central1-docker.pkg.dev/$PROJECT_ID/life-calendar-frontend/$COMMIT_SHA
 
 options:
   logging: CLOUD_LOGGING_ONLY
