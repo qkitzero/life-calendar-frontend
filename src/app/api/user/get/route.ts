@@ -1,26 +1,18 @@
+import { client } from '@/app/api/user/client';
 import { NextRequest, NextResponse } from 'next/server';
-
-const USER_SERVICE_URL = process.env.USER_SERVICE_URL || 'http://localhost:8082';
 
 export async function GET(req: NextRequest) {
   const accessToken = req.cookies.get('access_token')?.value;
 
-  const userServiceRes = await fetch(`${USER_SERVICE_URL}/v1/user`, {
-    method: 'GET',
+  const { data, error } = await client.GET('/v1/user', {
     headers: {
-      'Content-Type': 'application/json',
       Authorization: `Bearer ${accessToken}`,
     },
   });
 
-  if (!userServiceRes.ok) {
-    return NextResponse.json(
-      { error: 'Get user request failed' },
-      { status: userServiceRes.status },
-    );
+  if (error) {
+    return NextResponse.json(error, { status: 500 });
   }
-
-  const data = await userServiceRes.json();
 
   return NextResponse.json(data);
 }

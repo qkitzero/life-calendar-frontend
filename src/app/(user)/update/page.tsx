@@ -28,7 +28,7 @@ export default function Update() {
 
     try {
       const res = await fetch('/api/user/update', {
-        method: 'POST',
+        method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           displayName,

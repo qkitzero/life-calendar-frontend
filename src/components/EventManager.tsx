@@ -119,7 +119,7 @@ export default function EventManager({ events, onEventsChange }: EventManagerPro
         const startTimeISO = new Date(startTime).toISOString();
         const endTimeISO = new Date(endTime).toISOString();
         const res = await fetch('/api/event/update', {
-          method: 'POST',
+          method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
           },
@@ -189,7 +189,7 @@ export default function EventManager({ events, onEventsChange }: EventManagerPro
     if (user) {
       try {
         const res = await fetch('/api/event/delete', {
-          method: 'POST',
+          method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
           },
