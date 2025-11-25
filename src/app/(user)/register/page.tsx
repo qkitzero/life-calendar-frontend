@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import { useUser } from "@/context/UserContext";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useUser } from '@/context/UserContext';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 export default function Register() {
   const router = useRouter();
 
   const { refreshUser } = useUser();
 
-  const [displayName, setDisplayName] = useState("");
-  const [birthDate, setBirthDate] = useState("");
+  const [displayName, setDisplayName] = useState('');
+  const [birthDate, setBirthDate] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -21,17 +21,15 @@ export default function Register() {
     if (loading) return;
 
     setLoading(true);
-    setError("");
+    setError('');
     setSuccess(false);
 
-    const [year, month, day] = birthDate
-      .split("-")
-      .map((str) => parseInt(str, 10));
+    const [year, month, day] = birthDate.split('-').map((str) => parseInt(str, 10));
 
     try {
-      const res = await fetch("/api/user/create", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const res = await fetch('/api/user/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           displayName,
           birthDate: {
@@ -44,19 +42,19 @@ export default function Register() {
 
       if (!res.ok) {
         const errData = await res.json();
-        throw new Error(errData.message || "User creation failed");
+        throw new Error(errData.message || 'User creation failed');
       }
 
       setSuccess(true);
 
       refreshUser();
 
-      router.push("/");
+      router.push('/');
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message);
       } else {
-        setError("An unexpected error occurred");
+        setError('An unexpected error occurred');
       }
     } finally {
       setLoading(false);
@@ -100,13 +98,11 @@ export default function Register() {
           disabled={loading}
           className="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600 disabled:opacity-50"
         >
-          {loading ? "Registering..." : "Register"}
+          {loading ? 'Registering...' : 'Register'}
         </button>
 
         {error && <p className="text-red-600 text-sm">{error}</p>}
-        {success && (
-          <p className="text-green-600 text-sm">Registration successful! 🎉</p>
-        )}
+        {success && <p className="text-green-600 text-sm">Registration successful! 🎉</p>}
       </form>
     </div>
   );

@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { useState, useEffect, useRef } from "react";
-import { useUser } from "@/context/UserContext";
-import User from "@/components/User";
-import LoginButton from "@/components/LoginButton";
-import LogoutButton from "@/components/LogoutButton";
-import Link from "next/link";
+import LoginButton from '@/components/LoginButton';
+import LogoutButton from '@/components/LogoutButton';
+import User from '@/components/User';
+import { useUser } from '@/context/UserContext';
+import Link from 'next/link';
+import { useEffect, useRef, useState } from 'react';
 
 export default function Header() {
   const { user } = useUser();
@@ -18,9 +18,9 @@ export default function Header() {
         setIsMenuOpen(false);
       }
     }
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [menuRef]);
 
