@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from 'react';
 
 type BirthDate = {
   year: number;
@@ -31,8 +31,8 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   const fetchUser = async () => {
     try {
-      const res = await fetch("/api/user/get");
-      if (!res.ok) throw new Error("Failed to fetch user");
+      const res = await fetch('/api/user/get');
+      if (!res.ok) throw new Error('Failed to fetch user');
       const data = await res.json();
       setUser(data);
     } catch {
@@ -45,8 +45,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, refreshUser: fetchUser }}>
-      {children}
-    </UserContext.Provider>
+    <UserContext.Provider value={{ user, refreshUser: fetchUser }}>{children}</UserContext.Provider>
   );
 };

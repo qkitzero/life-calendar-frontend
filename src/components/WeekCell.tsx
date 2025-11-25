@@ -1,4 +1,4 @@
-import { Event } from "@/types/event";
+import { Event } from '@/types/event';
 
 type WeekCellProps = {
   isLived: boolean;
@@ -10,11 +10,11 @@ type WeekCellProps = {
 
 const averageColors = (colors: string[]): string => {
   if (colors.length === 0) {
-    return "";
+    return '';
   }
 
   const colorComponents = colors.map((color) => {
-    const hex = color.replace("#", "");
+    const hex = color.replace('#', '');
     const r = parseInt(hex.substring(0, 2), 16);
     const g = parseInt(hex.substring(2, 4), 16);
     const b = parseInt(hex.substring(4, 6), 16);
@@ -28,18 +28,16 @@ const averageColors = (colors: string[]): string => {
       acc.b += c.b;
       return acc;
     },
-    { r: 0, g: 0, b: 0 }
+    { r: 0, g: 0, b: 0 },
   );
 
   avgComponents.r = Math.round(avgComponents.r / colors.length);
   avgComponents.g = Math.round(avgComponents.g / colors.length);
   avgComponents.b = Math.round(avgComponents.b / colors.length);
 
-  const toHex = (c: number) => ("0" + c.toString(16)).slice(-2);
+  const toHex = (c: number) => ('0' + c.toString(16)).slice(-2);
 
-  return `#${toHex(avgComponents.r)}${toHex(avgComponents.g)}${toHex(
-    avgComponents.b
-  )}`;
+  return `#${toHex(avgComponents.r)}${toHex(avgComponents.g)}${toHex(avgComponents.b)}`;
 };
 
 export default function WeekCell({
@@ -50,27 +48,27 @@ export default function WeekCell({
   weekEndTime,
 }: WeekCellProps) {
   let style = {};
-  let className = "w-[10px] h-[10px] transition";
+  let className = 'w-[10px] h-[10px] transition';
 
   if (isCurrent) {
-    className += " border-1 border-gray-800 bg-green-500 animate-bounce";
+    className += ' border-1 border-gray-800 bg-green-500 animate-bounce';
   } else if (events.length > 0) {
     const avgColor = averageColors(events.map((e) => e.color));
     style = { backgroundColor: avgColor };
     if (isLived) {
-      className += " border-1 border-gray-800";
+      className += ' border-1 border-gray-800';
     }
   } else if (isLived) {
-    className += " bg-gray-800";
+    className += ' bg-gray-800';
   } else {
-    className += " bg-gray-300";
+    className += ' bg-gray-300';
   }
 
-  let tooltipText = `Week: ${weekStartTime.toISOString().split("T")[0]} ~ ${
-    weekEndTime.toISOString().split("T")[0]
+  let tooltipText = `Week: ${weekStartTime.toISOString().split('T')[0]} ~ ${
+    weekEndTime.toISOString().split('T')[0]
   }`;
   if (events.length > 0) {
-    const eventTitles = events.map((e) => e.title).join(", ");
+    const eventTitles = events.map((e) => e.title).join(', ');
     tooltipText += `\nEvents: ${eventTitles}`;
   }
 
