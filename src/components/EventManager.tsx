@@ -1,36 +1,33 @@
-"use client";
+'use client';
 
-import { useUser } from "@/context/UserContext";
-import { Event } from "@/types/event";
-import { useState } from "react";
+import { useUser } from '@/context/UserContext';
+import { Event } from '@/types/event';
+import { useState } from 'react';
 
 interface EventManagerProps {
   events: Event[];
   onEventsChange: (events: Event[]) => void;
 }
 
-export default function EventManager({
-  events,
-  onEventsChange,
-}: EventManagerProps) {
+export default function EventManager({ events, onEventsChange }: EventManagerProps) {
   const { user } = useUser();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingEvent, setEditingEvent] = useState<Event | null>(null);
   const [loading, setLoading] = useState(false);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
-  const [color, setColor] = useState("#1e2939");
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [startTime, setStartTime] = useState('');
+  const [endTime, setEndTime] = useState('');
+  const [color, setColor] = useState('#1e2939');
 
   const handleOpenCreateModal = () => {
     setEditingEvent(null);
-    setTitle("New Event");
-    setDescription("New Event Description");
-    setStartTime(new Date().toISOString().split("T")[0]);
-    setEndTime(new Date().toISOString().split("T")[0]);
-    setColor("#1e2939");
+    setTitle('New Event');
+    setDescription('New Event Description');
+    setStartTime(new Date().toISOString().split('T')[0]);
+    setEndTime(new Date().toISOString().split('T')[0]);
+    setColor('#1e2939');
     setIsModalOpen(true);
   };
 
@@ -38,8 +35,8 @@ export default function EventManager({
     setEditingEvent(event);
     setTitle(event.title);
     setDescription(event.description);
-    setStartTime(event.startTime.toISOString().split("T")[0]);
-    setEndTime(event.endTime.toISOString().split("T")[0]);
+    setStartTime(event.startTime.toISOString().split('T')[0]);
+    setEndTime(event.endTime.toISOString().split('T')[0]);
     setColor(event.color);
     setIsModalOpen(true);
   };
@@ -57,10 +54,10 @@ export default function EventManager({
       try {
         const startTimeISO = new Date(startTime).toISOString();
         const endTimeISO = new Date(endTime).toISOString();
-        const res = await fetch("/api/event/create", {
-          method: "POST",
+        const res = await fetch('/api/event/create', {
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             title,
@@ -71,7 +68,7 @@ export default function EventManager({
         });
 
         if (!res.ok) {
-          throw new Error("Failed to create event");
+          throw new Error('Failed to create event');
         }
 
         const data = await res.json();
@@ -121,10 +118,10 @@ export default function EventManager({
       try {
         const startTimeISO = new Date(startTime).toISOString();
         const endTimeISO = new Date(endTime).toISOString();
-        const res = await fetch("/api/event/update", {
-          method: "POST",
+        const res = await fetch('/api/event/update', {
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             id: editingEvent.id,
@@ -137,7 +134,7 @@ export default function EventManager({
         });
 
         if (!res.ok) {
-          throw new Error("Failed to update event");
+          throw new Error('Failed to update event');
         }
 
         const data = await res.json();
@@ -152,7 +149,7 @@ export default function EventManager({
                 endTime: new Date(data.event.endTime),
                 color,
               }
-            : event
+            : event,
         );
         onEventsChange(updatedEvents);
         handleCloseModal();
@@ -173,7 +170,7 @@ export default function EventManager({
                 endTime: new Date(endTime),
                 color,
               }
-            : event
+            : event,
         );
         onEventsChange(updatedEvents);
         handleCloseModal();
@@ -191,10 +188,10 @@ export default function EventManager({
     setLoading(true);
     if (user) {
       try {
-        const res = await fetch("/api/event/delete", {
-          method: "POST",
+        const res = await fetch('/api/event/delete', {
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             id: editingEvent.id,
@@ -202,7 +199,7 @@ export default function EventManager({
         });
 
         if (!res.ok) {
-          throw new Error("Failed to delete event");
+          throw new Error('Failed to delete event');
         }
 
         onEventsChange(events.filter((event) => event.id !== editingEvent.id));
@@ -247,7 +244,7 @@ export default function EventManager({
         <div className="absolute inset-0 flex justify-center z-10">
           <div className="w-lg mx-auto p-8 rounded-md shadow-lg bg-white">
             <h2 className="text-2xl font-semibold mb-4 text-center">
-              {editingEvent ? "Edit Event" : "Create Event"}
+              {editingEvent ? 'Edit Event' : 'Create Event'}
             </h2>
             <form
               onSubmit={editingEvent ? handleUpdateEvent : handleCreateEvent}
@@ -344,7 +341,7 @@ export default function EventManager({
                   disabled={loading}
                   className="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600"
                 >
-                  {editingEvent ? "Update Event" : "Create Event"}
+                  {editingEvent ? 'Update Event' : 'Create Event'}
                 </button>
               </div>
             </form>

@@ -1,16 +1,15 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
 
-const EVENT_SERVICE_URL =
-  process.env.EVENT_SERVICE_URL || "http://localhost:8083";
+const EVENT_SERVICE_URL = process.env.EVENT_SERVICE_URL || 'http://localhost:8083';
 
 export async function POST(req: NextRequest) {
-  const accessToken = req.cookies.get("access_token")?.value;
+  const accessToken = req.cookies.get('access_token')?.value;
   const body = await req.json();
 
   const eventServiceRes = await fetch(`${EVENT_SERVICE_URL}/v1/events`, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${accessToken}`,
     },
     body: JSON.stringify({
@@ -23,8 +22,8 @@ export async function POST(req: NextRequest) {
 
   if (!eventServiceRes.ok) {
     return NextResponse.json(
-      { error: "Create event request failed" },
-      { status: eventServiceRes.status }
+      { error: 'Create event request failed' },
+      { status: eventServiceRes.status },
     );
   }
 
