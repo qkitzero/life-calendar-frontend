@@ -1,0 +1,353 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "event/v1/event.proto",
+        "version": "version not set"
+    },
+    "tags": [
+        {
+            "name": "EventService"
+        }
+    ],
+    "paths": {
+        "/v1/events": {
+            "get": {
+                "operationId": "EventService_ListEvents",
+                "responses": {
+                    "200": {
+                        "description": "A successful response.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/v1ListEventsResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "An unexpected error response.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/rpcStatus"
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "EventService"
+                ]
+            },
+            "post": {
+                "operationId": "EventService_CreateEvent",
+                "responses": {
+                    "200": {
+                        "description": "A successful response.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/v1CreateEventResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "An unexpected error response.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/rpcStatus"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/v1CreateEventRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "tags": [
+                    "EventService"
+                ]
+            }
+        },
+        "/v1/events/{event.id}": {
+            "put": {
+                "operationId": "EventService_UpdateEvent",
+                "responses": {
+                    "200": {
+                        "description": "A successful response.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/v1UpdateEventResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "An unexpected error response.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/rpcStatus"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "event.id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EventServiceUpdateEventBody"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "tags": [
+                    "EventService"
+                ]
+            }
+        },
+        "/v1/events/{id}": {
+            "get": {
+                "operationId": "EventService_GetEvent",
+                "responses": {
+                    "200": {
+                        "description": "A successful response.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/v1GetEventResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "An unexpected error response.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/rpcStatus"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "tags": [
+                    "EventService"
+                ]
+            },
+            "delete": {
+                "operationId": "EventService_DeleteEvent",
+                "responses": {
+                    "200": {
+                        "description": "A successful response.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/v1DeleteEventResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "An unexpected error response.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/rpcStatus"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "tags": [
+                    "EventService"
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "EventServiceUpdateEventBody": {
+                "type": "object",
+                "properties": {
+                    "event": {
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "startTime": {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "endTime": {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "color": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "protobufAny": {
+                "type": "object",
+                "properties": {
+                    "@type": {
+                        "type": "string"
+                    }
+                },
+                "additionalProperties": {}
+            },
+            "rpcStatus": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "details": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/protobufAny"
+                        }
+                    }
+                }
+            },
+            "v1CreateEventRequest": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "startTime": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "endTime": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "color": {
+                        "type": "string"
+                    }
+                }
+            },
+            "v1CreateEventResponse": {
+                "type": "object",
+                "properties": {
+                    "event": {
+                        "$ref": "#/components/schemas/v1Event"
+                    }
+                }
+            },
+            "v1DeleteEventResponse": {
+                "type": "object"
+            },
+            "v1Event": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "startTime": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "endTime": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "color": {
+                        "type": "string"
+                    }
+                }
+            },
+            "v1GetEventResponse": {
+                "type": "object",
+                "properties": {
+                    "event": {
+                        "$ref": "#/components/schemas/v1Event"
+                    }
+                }
+            },
+            "v1ListEventsResponse": {
+                "type": "object",
+                "properties": {
+                    "events": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/v1Event"
+                        }
+                    }
+                }
+            },
+            "v1UpdateEventResponse": {
+                "type": "object",
+                "properties": {
+                    "event": {
+                        "$ref": "#/components/schemas/v1Event"
+                    }
+                }
+            }
+        }
+    }
+}

@@ -4,6 +4,19 @@
   "private": true,
   "scripts": {
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "generate:auth:buf": "buf generate buf.build/qkitzero-org/auth-service",
+    "generate:user:buf": "buf generate buf.build/qkitzero-org/user-service",
+    "generate:event:buf": "buf generate buf.build/qkitzero-org/event-service",
+    "generate:buf": "npm run generate:auth:buf && npm run generate:user:buf && npm run generate:event:buf",
+    "generate:auth:openapi": "swagger2openapi ./gen/auth/v1/auth.swagger.json -o ./gen/auth/v1/auth.openapi.json",
+    "generate:user:openapi": "swagger2openapi ./gen/user/v1/user.swagger.json -o ./gen/user/v1/user.openapi.json",
+    "generate:event:openapi": "swagger2openapi ./gen/event/v1/event.swagger.json -o ./gen/event/v1/event.openapi.json",
+    "generate:openapi": "npm run generate:auth:openapi && npm run generate:user:openapi && npm run generate:event:openapi",
+    "generate:auth:schema": "openapi-typescript ./gen/auth/v1/auth.openapi.json -o ./gen/auth/v1/auth.schema.ts",
+    "generate:user:schema": "openapi-typescript ./gen/user/v1/user.openapi.json -o ./gen/user/v1/user.schema.ts",
+    "generate:event:schema": "openapi-typescript ./gen/event/v1/event.openapi.json -o ./gen/event/v1/event.schema.ts",
+    "generate:schema": "npm run generate:auth:schema && npm run generate:user:schema && npm run generate:event:schema",
+    "generate:all": "npm run generate:buf && npm run generate:openapi && npm run generate:schema",
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
@@ -11,6 +24,7 @@
   },
   "dependencies": {
     "next": "15.4.7",
+    "openapi-fetch": "^0.15.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
@@ -23,8 +37,10 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.3.2",
+    "openapi-typescript": "^7.10.1",
     "prettier": "^3.6.2",
     "prettier-plugin-organize-imports": "^4.3.0",
+    "swagger2openapi": "^7.0.8",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

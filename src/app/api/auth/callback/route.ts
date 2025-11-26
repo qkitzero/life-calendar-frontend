@@ -1,41 +1,38 @@
+import { client as authClient } from '@/app/api/auth/client';
+import { client as userClient } from '@/app/api/user/client';
 import { NextRequest, NextResponse } from 'next/server';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
 
-const AUTH_SERVICE_URL = process.env.AUTH_SERVICE_URL || 'http://localhost:8081';
-
-const USER_SERVICE_URL = process.env.USER_SERVICE_URL || 'http://localhost:8082';
-
 export async function GET(req: NextRequest) {
   const code = req.nextUrl.searchParams.get('code');
-  const redirectUri = `${SITE_URL}/api/auth/callback`;
-
-  const authServiceRes = await fetch(`${AUTH_SERVICE_URL}/v1/exchange-code`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ code, redirect_uri: redirectUri }),
-  });
-
-  if (!authServiceRes.ok) {
-    return NextResponse.json(
-      { error: 'Exchange code request failed' },
-      { status: authServiceRes.status },
-    );
+  if (!code) {
+    return NextResponse.json({ error: 'Missing code' }, { status: 400 });
   }
 
-  const { accessToken } = await authServiceRes.json();
+  const redirectUri = `${SITE_URL}/api/auth/callback`;
 
-  const userServiceRes = await fetch(`${USER_SERVICE_URL}/v1/user`, {
-    method: 'GET',
+  const { data: authData, error: authError } = await authClient.POST('/v1/exchange-code', {
+    body: { code, redirectUri: redirectUri },
+  });
+
+  if (authError) {
+    return NextResponse.json(authError, { status: 500 });
+  }
+
+  const accessToken = authData.accessToken;
+
+  if (!accessToken) {
+    return NextResponse.json({ error: 'Missing access token' }, { status: 500 });
+  }
+
+  const { error: userError, response: userResponse } = await userClient.GET('/v1/user', {
     headers: {
-      'Content-Type': 'application/json',
       Authorization: `Bearer ${accessToken}`,
     },
   });
 
-  if (userServiceRes.status === 404) {
+  if (userResponse.status === 404) {
     const res = NextResponse.redirect(`${SITE_URL}/register`);
     res.cookies.set('access_token', accessToken, {
       httpOnly: true,
@@ -45,12 +42,8 @@ export async function GET(req: NextRequest) {
     return res;
   }
 
-  if (!userServiceRes.ok) {
-    console.error('Failed to get user:', await userServiceRes.text());
-    return NextResponse.json(
-      { error: 'Get user request failed' },
-      { status: userServiceRes.status },
-    );
+  if (userError) {
+    return NextResponse.json(userError, { status: 500 });
   }
 
   const res = NextResponse.redirect(`${SITE_URL}/`);

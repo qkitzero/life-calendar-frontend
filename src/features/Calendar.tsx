@@ -131,12 +131,7 @@ export default function Calendar() {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const res = await fetch('/api/event/list', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+        const res = await fetch('/api/event/list');
         if (!res.ok) {
           throw new Error('Failed to fetch events');
         }
