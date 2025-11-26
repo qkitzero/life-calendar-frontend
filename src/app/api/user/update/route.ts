@@ -1,31 +1,23 @@
+import { client } from '@/app/api/user/client';
 import { NextRequest, NextResponse } from 'next/server';
 
-const USER_SERVICE_URL = process.env.USER_SERVICE_URL || 'http://localhost:8082';
-
-export async function POST(req: NextRequest) {
+export async function PATCH(req: NextRequest) {
   const accessToken = req.cookies.get('access_token')?.value;
   const body = await req.json();
 
-  const userServiceRes = await fetch(`${USER_SERVICE_URL}/v1/user`, {
-    method: 'PATCH',
+  const { data, error } = await client.PATCH('/v1/user', {
     headers: {
-      'Content-Type': 'application/json',
       Authorization: `Bearer ${accessToken}`,
     },
-    body: JSON.stringify({
-      display_name: body.displayName,
-      birth_date: body.birthDate,
-    }),
+    body: {
+      displayName: body.displayName,
+      birthDate: body.birthDate,
+    },
   });
 
-  if (!userServiceRes.ok) {
-    return NextResponse.json(
-      { error: 'Update user request failed' },
-      { status: userServiceRes.status },
-    );
+  if (error) {
+    return NextResponse.json(error, { status: 500 });
   }
-
-  const data = await userServiceRes.json();
 
   return NextResponse.json(data);
 }
