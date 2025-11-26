@@ -18,8 +18,8 @@ export async function PATCH(req: NextRequest) {
       event: {
         title: body.title,
         description: body.description,
-        start_time: body.startTimeISO,
-        end_time: body.endTimeISO,
+        startTime: body.startTimeISO,
+        endTime: body.endTimeISO,
         color: body.color,
       },
     },

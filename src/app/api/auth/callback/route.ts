@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
   const redirectUri = `${SITE_URL}/api/auth/callback`;
 
   const { data: authData, error: authError } = await authClient.POST('/v1/exchange-code', {
-    body: { code, redirect_uri: redirectUri },
+    body: { code, redirectUri: redirectUri },
   });
 
   if (authError) {
