@@ -1,7 +1,9 @@
 'use client';
 
+import BirthDateInput from '@/components/BirthDateInput';
+import CalendarGrid from '@/components/CalendarGrid';
+import CalendarHeader from '@/components/CalendarHeader';
 import EventManager from '@/components/EventManager';
-import WeekCell from '@/components/WeekCell';
 import { useUser } from '@/context/UserContext';
 import { Event } from '@/types/event';
 import { useEffect, useState } from 'react';
@@ -161,19 +163,7 @@ export default function Calendar() {
   }, [user]);
   return (
     <div className="flex flex-col items-center relative">
-      {/* Birth Date Form */}
-      <div className="mb-4">
-        <label htmlFor="birthdate" className="mr-2">
-          Birth Date
-        </label>
-        <input
-          id="birthdate"
-          type="date"
-          value={birthDateStr}
-          onChange={(e) => setBirthDateStr(e.target.value)}
-          className="border p-2 rounded"
-        />
-      </div>
+      <BirthDateInput birthDateStr={birthDateStr} onBirthDateChange={setBirthDateStr} />
 
       <EventManager events={events} onEventsChange={setEvents} />
 
@@ -181,123 +171,28 @@ export default function Calendar() {
       <div className="flex flex-col lg:flex-row lg:space-x-8">
         {/* Left Calendar (0-39 years) */}
         <div className="space-y-1">
-          <div className="grid grid-cols-53 gap-1">
-            {Array.from({ length: WEEKS_PER_YEAR + 1 }).map((_, week) => (
-              <div key={week} className="w-2 h-2 relative">
-                <span className="absolute -top-4 inset-0 flex justify-center items-center text-[10px]">
-                  {(week % 5 === 0 && week !== 0) || week === 1 ? week : ''}
-                </span>
-                {week === WEEKS_PER_YEAR && (
-                  <span className="absolute -top-4 inset-0 flex items-center text-xs">Week</span>
-                )}
-              </div>
-            ))}
-          </div>
-
-          {Array.from({ length: MAX_YEARS / 2 }).map((_, year) => (
-            <div key={year} className="grid grid-cols-53 gap-1">
-              <div className="relative">
-                <span className="absolute -left-4 inset-0 flex justify-center items-center text-[10px]">
-                  {year % 5 === 0 ? year : ''}
-                </span>
-                {year === MAX_YEARS / 2 - 1 && (
-                  <span className="absolute -left-4 inset-0 flex items-center justify-center text-xs">
-                    Age
-                  </span>
-                )}
-              </div>
-
-              {Array.from({ length: WEEKS_PER_YEAR }).map((_, week) => {
-                const isLived = year * WEEKS_PER_YEAR + week < livedWeeks;
-                const isCurrent = year * WEEKS_PER_YEAR + week === livedWeeks;
-                const weekStartTime = new Date(
-                  birthDate.getFullYear() + year,
-                  birthDate.getMonth(),
-                  birthDate.getDate() + week * 7,
-                );
-                const weekEndTime = new Date(
-                  birthDate.getFullYear() + year,
-                  birthDate.getMonth(),
-                  birthDate.getDate() + (week + 1) * 7 - 1,
-                );
-                const filteredEvents = events.filter((event) => {
-                  return event.startTime <= weekEndTime && event.endTime >= weekStartTime;
-                });
-                return (
-                  <WeekCell
-                    key={week}
-                    isLived={isLived}
-                    isCurrent={isCurrent}
-                    events={filteredEvents}
-                    weekStartTime={weekStartTime}
-                    weekEndTime={weekEndTime}
-                  />
-                );
-              })}
-            </div>
-          ))}
+          <CalendarHeader weeksPerYear={WEEKS_PER_YEAR} />
+          <CalendarGrid
+            startYear={0}
+            endYear={MAX_YEARS / 2}
+            weeksPerYear={WEEKS_PER_YEAR}
+            livedWeeks={livedWeeks}
+            birthDate={birthDate}
+            events={events}
+          />
         </div>
 
         {/* Right Calendar (40-79 years) */}
         <div className="space-y-1 mt-8 lg:mt-0">
-          <div className="grid grid-cols-53 gap-1">
-            {Array.from({ length: WEEKS_PER_YEAR + 1 }).map((_, week) => (
-              <div key={week} className="w-2 h-2 relative">
-                <span className="absolute -top-4 inset-0 flex justify-center items-center text-[10px]">
-                  {(week % 5 === 0 && week !== 0) || week === 1 ? week : ''}
-                </span>
-                {week === WEEKS_PER_YEAR && (
-                  <span className="absolute -top-4 inset-0 flex items-center text-xs">Week</span>
-                )}
-              </div>
-            ))}
-          </div>
-
-          {Array.from({ length: MAX_YEARS / 2 }).map((_, index) => {
-            const year = index + MAX_YEARS / 2;
-            return (
-              <div key={year} className="grid grid-cols-53 gap-1">
-                <div className="relative">
-                  <span className="absolute -left-4 inset-0 flex justify-center items-center text-[10px]">
-                    {year % 5 === 0 ? year : ''}
-                  </span>
-                  {year === MAX_YEARS - 1 && (
-                    <span className="absolute -left-4 inset-0 flex items-center justify-center text-xs">
-                      Age
-                    </span>
-                  )}
-                </div>
-
-                {Array.from({ length: WEEKS_PER_YEAR }).map((_, week) => {
-                  const isLived = year * WEEKS_PER_YEAR + week < livedWeeks;
-                  const isCurrent = year * WEEKS_PER_YEAR + week === livedWeeks;
-                  const weekStartTime = new Date(
-                    birthDate.getFullYear() + year,
-                    birthDate.getMonth(),
-                    birthDate.getDate() + week * 7,
-                  );
-                  const weekEndTime = new Date(
-                    birthDate.getFullYear() + year,
-                    birthDate.getMonth(),
-                    birthDate.getDate() + (week + 1) * 7 - 1,
-                  );
-                  const filteredEvents = events.filter((event) => {
-                    return event.startTime <= weekEndTime && event.endTime >= weekStartTime;
-                  });
-                  return (
-                    <WeekCell
-                      key={week}
-                      isLived={isLived}
-                      isCurrent={isCurrent}
-                      events={filteredEvents}
-                      weekStartTime={weekStartTime}
-                      weekEndTime={weekEndTime}
-                    />
-                  );
-                })}
-              </div>
-            );
-          })}
+          <CalendarHeader weeksPerYear={WEEKS_PER_YEAR} />
+          <CalendarGrid
+            startYear={MAX_YEARS / 2}
+            endYear={MAX_YEARS}
+            weeksPerYear={WEEKS_PER_YEAR}
+            livedWeeks={livedWeeks}
+            birthDate={birthDate}
+            events={events}
+          />
         </div>
       </div>
     </div>
