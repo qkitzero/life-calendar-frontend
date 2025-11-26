@@ -183,7 +183,7 @@ export default function Calendar() {
         </div>
 
         {/* Right Calendar (40-79 years) */}
-        <div className="space-y-1">
+        <div className="space-y-1 mt-8 lg:mt-0">
           <CalendarHeader weeksPerYear={WEEKS_PER_YEAR} />
           <CalendarGrid
             startYear={MAX_YEARS / 2}
