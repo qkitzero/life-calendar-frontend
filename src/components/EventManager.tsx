@@ -64,6 +64,7 @@ export default function EventManager({ events, onEventsChange }: EventManagerPro
             description,
             startTimeISO,
             endTimeISO,
+            color,
           }),
         });
 
