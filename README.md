@@ -1,6 +1,6 @@
 # Life Calendar Frontend
 
-[![release](https://img.shields.io/github/v/release/qkitzero/life-calendar-frontend?logo=github)](https://github.com/qkitzero/life-calencdar-frontend/releases)
+[![release](https://img.shields.io/github/v/release/qkitzero/life-calendar-frontend?logo=github)](https://github.com/qkitzero/life-calendar-frontend/releases)
 [![Release](https://github.com/qkitzero/life-calendar-frontend/actions/workflows/release.yml/badge.svg)](https://github.com/qkitzero/life-calendar-frontend/actions/workflows/release.yml)
 
 [life-calendar.qkitzero.xyz](https://life-calendar.qkitzero.xyz)
