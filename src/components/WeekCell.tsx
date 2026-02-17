@@ -56,12 +56,12 @@ export default function WeekCell({
     const avgColor = averageColors(events.map((e) => e.color));
     style = { backgroundColor: avgColor };
     if (isLived) {
-      classNames.push('ring-1', 'ring-white/20');
+      classNames.push('ring-1', 'ring-[var(--ring-default)]');
     }
   } else if (isLived) {
-    classNames.push('bg-white/20');
+    classNames.push('bg-raised-strong');
   } else {
-    classNames.push('bg-white/5');
+    classNames.push('bg-raised');
   }
 
   const className = classNames.join(' ');

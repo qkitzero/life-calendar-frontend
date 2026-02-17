@@ -228,13 +228,13 @@ export default function EventManager({ events, onEventsChange }: EventManagerPro
         {events.map((event) => (
           <div
             key={event.id}
-            className="w-8 h-8 flex items-center justify-center cursor-pointer rounded-lg hover:scale-110 ring-1 ring-white/10 transition-transform"
+            className="w-8 h-8 flex items-center justify-center cursor-pointer rounded-lg hover:scale-110 ring-1 ring-[var(--ring-subtle)] transition-transform"
             style={{ backgroundColor: event.color }}
             onClick={() => handleOpenEditModal(event)}
           ></div>
         ))}
         <button
-          className="w-8 h-8 flex items-center justify-center cursor-pointer bg-white/10 text-slate-300 rounded-lg hover:bg-white/20 transition"
+          className="w-8 h-8 flex items-center justify-center cursor-pointer bg-raised-hover text-secondary rounded-lg hover:bg-raised-strong transition"
           onClick={handleOpenCreateModal}
         >
           +
@@ -242,9 +242,9 @@ export default function EventManager({ events, onEventsChange }: EventManagerPro
       </div>
 
       {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm z-50">
-          <div className="w-full max-w-lg mx-4 p-8 rounded-2xl bg-slate-900/80 backdrop-blur-xl border border-white/10 shadow-2xl">
-            <h2 className="text-2xl font-semibold mb-4 text-center text-white">
+        <div className="fixed inset-0 flex items-center justify-center bg-overlay backdrop-blur-sm z-50">
+          <div className="w-full max-w-lg mx-4 p-8 rounded-2xl bg-modal backdrop-blur-xl border border-subtle shadow-2xl">
+            <h2 className="text-2xl font-semibold mb-4 text-center text-primary">
               {editingEvent ? 'Edit Event' : 'Create Event'}
             </h2>
             <form
@@ -252,7 +252,7 @@ export default function EventManager({ events, onEventsChange }: EventManagerPro
               className="space-y-4"
             >
               <div>
-                <label htmlFor="title" className="block mb-1 text-sm font-medium text-slate-300">
+                <label htmlFor="title" className="block mb-1 text-sm font-medium text-secondary">
                   Title
                 </label>
                 <input
@@ -261,24 +261,24 @@ export default function EventManager({ events, onEventsChange }: EventManagerPro
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   required
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white focus:border-emerald-400/50 focus:ring-1 focus:ring-emerald-400/20 focus:outline-none transition"
+                  className="w-full bg-raised border border-subtle rounded-xl px-3 py-2 text-primary focus:border-emerald-400/50 focus:ring-1 focus:ring-emerald-400/20 focus:outline-none transition"
                 />
               </div>
 
               <div>
-                <label htmlFor="description" className="block mb-1 text-sm font-medium text-slate-300">
+                <label htmlFor="description" className="block mb-1 text-sm font-medium text-secondary">
                   Description
                 </label>
                 <textarea
                   id="description"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white focus:border-emerald-400/50 focus:ring-1 focus:ring-emerald-400/20 focus:outline-none transition"
+                  className="w-full bg-raised border border-subtle rounded-xl px-3 py-2 text-primary focus:border-emerald-400/50 focus:ring-1 focus:ring-emerald-400/20 focus:outline-none transition"
                 />
               </div>
 
               <div>
-                <label htmlFor="startTime" className="block mb-1 text-sm font-medium text-slate-300">
+                <label htmlFor="startTime" className="block mb-1 text-sm font-medium text-secondary">
                   Start Date
                 </label>
                 <input
@@ -287,12 +287,12 @@ export default function EventManager({ events, onEventsChange }: EventManagerPro
                   value={startTime}
                   onChange={(e) => setStartTime(e.target.value)}
                   required
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white focus:border-emerald-400/50 focus:ring-1 focus:ring-emerald-400/20 focus:outline-none transition"
+                  className="w-full bg-raised border border-subtle rounded-xl px-3 py-2 text-primary focus:border-emerald-400/50 focus:ring-1 focus:ring-emerald-400/20 focus:outline-none transition"
                 />
               </div>
 
               <div>
-                <label htmlFor="endTime" className="block mb-1 text-sm font-medium text-slate-300">
+                <label htmlFor="endTime" className="block mb-1 text-sm font-medium text-secondary">
                   End Date
                 </label>
                 <input
@@ -301,12 +301,12 @@ export default function EventManager({ events, onEventsChange }: EventManagerPro
                   value={endTime}
                   onChange={(e) => setEndTime(e.target.value)}
                   required
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white focus:border-emerald-400/50 focus:ring-1 focus:ring-emerald-400/20 focus:outline-none transition"
+                  className="w-full bg-raised border border-subtle rounded-xl px-3 py-2 text-primary focus:border-emerald-400/50 focus:ring-1 focus:ring-emerald-400/20 focus:outline-none transition"
                 />
               </div>
 
               <div>
-                <label htmlFor="color" className="block mb-1 text-sm font-medium text-slate-300">
+                <label htmlFor="color" className="block mb-1 text-sm font-medium text-secondary">
                   Color
                 </label>
                 <input
@@ -314,7 +314,7 @@ export default function EventManager({ events, onEventsChange }: EventManagerPro
                   type="color"
                   value={color}
                   onChange={(e) => setColor(e.target.value)}
-                  className="w-full h-10 bg-white/5 border border-white/10 rounded-xl p-1 focus:border-emerald-400/50 focus:ring-1 focus:ring-emerald-400/20 focus:outline-none transition"
+                  className="w-full h-10 bg-raised border border-subtle rounded-xl p-1 focus:border-emerald-400/50 focus:ring-1 focus:ring-emerald-400/20 focus:outline-none transition"
                 />
               </div>
 
@@ -331,7 +331,7 @@ export default function EventManager({ events, onEventsChange }: EventManagerPro
 
                 <button
                   type="button"
-                  className="w-full bg-white/10 text-slate-300 py-2 rounded-xl hover:bg-white/20 hover:text-white transition"
+                  className="w-full bg-raised-hover text-secondary py-2 rounded-xl hover:bg-raised-strong hover:text-primary transition"
                   onClick={handleCloseModal}
                 >
                   Cancel

@@ -27,11 +27,11 @@ export default function CalendarGrid({
         return (
           <div key={year} className="grid grid-cols-53 gap-1">
             <div className="relative">
-              <span className="absolute -left-4 inset-0 flex justify-center items-center text-[10px] text-slate-500">
+              <span className="absolute -left-4 inset-0 flex justify-center items-center text-[10px] text-muted">
                 {year % 5 === 0 ? year : ''}
               </span>
               {year === endYear - 1 && (
-                <span className="absolute -left-4 inset-0 flex items-center justify-center text-xs text-slate-400">
+                <span className="absolute -left-4 inset-0 flex items-center justify-center text-xs text-muted">
                   Age
                 </span>
               )}
