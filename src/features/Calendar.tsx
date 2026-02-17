@@ -85,37 +85,39 @@ export default function Calendar() {
     }
   }, [user]);
   return (
-    <div className="flex flex-col items-center relative">
+    <div className="flex flex-col items-center relative px-8 py-6">
       <BirthDateInput birthDateStr={birthDateStr} onBirthDateChange={setBirthDateStr} />
 
       <EventManager events={events} onEventsChange={setEvents} />
 
       {/* Calendar Grid */}
-      <div className="flex flex-col lg:flex-row lg:space-x-8">
-        {/* Left Calendar (0-39 years) */}
-        <div className="space-y-1">
-          <CalendarHeader weeksPerYear={WEEKS_PER_YEAR} />
-          <CalendarGrid
-            startYear={0}
-            endYear={MAX_YEARS / 2}
-            weeksPerYear={WEEKS_PER_YEAR}
-            livedWeeks={livedWeeks}
-            birthDate={birthDate}
-            events={events}
-          />
-        </div>
+      <div className="glass rounded-2xl p-6 shadow-2xl">
+        <div className="flex flex-col lg:flex-row lg:space-x-8">
+          {/* Left Calendar (0-39 years) */}
+          <div className="space-y-1">
+            <CalendarHeader weeksPerYear={WEEKS_PER_YEAR} />
+            <CalendarGrid
+              startYear={0}
+              endYear={MAX_YEARS / 2}
+              weeksPerYear={WEEKS_PER_YEAR}
+              livedWeeks={livedWeeks}
+              birthDate={birthDate}
+              events={events}
+            />
+          </div>
 
-        {/* Right Calendar (40-79 years) */}
-        <div className="space-y-1 mt-8 lg:mt-0">
-          <CalendarHeader weeksPerYear={WEEKS_PER_YEAR} />
-          <CalendarGrid
-            startYear={MAX_YEARS / 2}
-            endYear={MAX_YEARS}
-            weeksPerYear={WEEKS_PER_YEAR}
-            livedWeeks={livedWeeks}
-            birthDate={birthDate}
-            events={events}
-          />
+          {/* Right Calendar (40-79 years) */}
+          <div className="space-y-1 mt-8 lg:mt-0">
+            <CalendarHeader weeksPerYear={WEEKS_PER_YEAR} />
+            <CalendarGrid
+              startYear={MAX_YEARS / 2}
+              endYear={MAX_YEARS}
+              weeksPerYear={WEEKS_PER_YEAR}
+              livedWeeks={livedWeeks}
+              birthDate={birthDate}
+              events={events}
+            />
+          </div>
         </div>
       </div>
     </div>

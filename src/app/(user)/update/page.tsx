@@ -62,11 +62,11 @@ export default function Update() {
   };
 
   return (
-    <div className="max-w-lg mx-auto p-8 rounded-md shadow-lg">
-      <h1 className="text-2xl font-semibold mb-4 text-center">Update Profile</h1>
+    <div className="max-w-lg mx-auto p-8 rounded-2xl glass-strong mt-12">
+      <h1 className="text-2xl font-semibold mb-4 text-center text-white">Update Profile</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="displayName" className="block mb-1">
+          <label htmlFor="displayName" className="block mb-1 text-sm font-medium text-slate-300">
             Display Name
           </label>
           <input
@@ -75,12 +75,12 @@ export default function Update() {
             value={displayName}
             onChange={(e) => setDisplayName(e.target.value)}
             required
-            className="w-full border p-2 rounded"
+            className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white focus:border-emerald-400/50 focus:ring-1 focus:ring-emerald-400/20 focus:outline-none transition"
           />
         </div>
 
         <div>
-          <label htmlFor="birthDate" className="block mb-1">
+          <label htmlFor="birthDate" className="block mb-1 text-sm font-medium text-slate-300">
             Birth Date
           </label>
           <input
@@ -89,20 +89,20 @@ export default function Update() {
             value={birthDate}
             onChange={(e) => setBirthDate(e.target.value)}
             required
-            className="w-full border p-2 rounded"
+            className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white focus:border-emerald-400/50 focus:ring-1 focus:ring-emerald-400/20 focus:outline-none transition"
           />
         </div>
 
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600 disabled:opacity-50"
+          className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 text-white py-2 rounded-xl hover:from-emerald-600 hover:to-teal-600 disabled:opacity-50 transition"
         >
           {loading ? 'Updating...' : 'Update'}
         </button>
 
-        {error && <p className="text-red-600 text-sm">{error}</p>}
-        {success && <p className="text-green-600 text-sm">Update successful! 🎉</p>}
+        {error && <p className="text-rose-400 text-sm">{error}</p>}
+        {success && <p className="text-emerald-400 text-sm">Update successful!</p>}
       </form>
     </div>
   );
