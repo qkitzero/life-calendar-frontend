@@ -1,35 +1,98 @@
 @import "tailwindcss";
 
-@theme {
-  --color-glass: rgba(255, 255, 255, 0.05);
-  --color-glass-strong: rgba(255, 255, 255, 0.1);
-  --color-glass-border: rgba(255, 255, 255, 0.1);
-  --color-glass-border-strong: rgba(255, 255, 255, 0.15);
+/* ── Light theme (default) ── */
+:root {
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+
+  --surface-base: #f0f4f8;
+  --surface-mid: #e2e8f0;
+  --surface-end: #cbd5e1;
+
+  --surface-raised: rgba(0, 0, 0, 0.03);
+  --surface-raised-hover: rgba(0, 0, 0, 0.06);
+  --surface-raised-strong: rgba(0, 0, 0, 0.1);
+
+  --border-subtle: rgba(0, 0, 0, 0.08);
+
+  --glass-bg: rgba(255, 255, 255, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --glass-bg-strong: rgba(255, 255, 255, 0.75);
+  --glass-border-strong: rgba(255, 255, 255, 0.6);
+
+  --overlay-bg: rgba(0, 0, 0, 0.3);
+  --modal-bg: rgba(255, 255, 255, 0.85);
+
+  --ring-subtle: rgba(0, 0, 0, 0.08);
+  --ring-default: rgba(0, 0, 0, 0.15);
+
+  color-scheme: light;
 }
 
-:root {
-  --background: #0a0a1a;
-  --foreground: #f1f5f9;
+/* ── Dark theme ── */
+.dark {
+  --text-primary: #ffffff;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+
+  --surface-base: #0a0a1a;
+  --surface-mid: #0f172a;
+  --surface-end: #1a1a2e;
+
+  --surface-raised: rgba(255, 255, 255, 0.05);
+  --surface-raised-hover: rgba(255, 255, 255, 0.1);
+  --surface-raised-strong: rgba(255, 255, 255, 0.2);
+
+  --border-subtle: rgba(255, 255, 255, 0.1);
+
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-bg-strong: rgba(255, 255, 255, 0.1);
+  --glass-border-strong: rgba(255, 255, 255, 0.15);
+
+  --overlay-bg: rgba(0, 0, 0, 0.6);
+  --modal-bg: rgba(15, 23, 42, 0.8);
+
+  --ring-subtle: rgba(255, 255, 255, 0.1);
+  --ring-default: rgba(255, 255, 255, 0.2);
+
   color-scheme: dark;
 }
 
+/* ── Tailwind theme tokens ── */
+@theme {
+  --color-primary: var(--text-primary);
+  --color-secondary: var(--text-secondary);
+  --color-muted: var(--text-muted);
+
+  --color-raised: var(--surface-raised);
+  --color-raised-hover: var(--surface-raised-hover);
+  --color-raised-strong: var(--surface-raised-strong);
+
+  --color-subtle: var(--border-subtle);
+
+  --color-overlay: var(--overlay-bg);
+  --color-modal: var(--modal-bg);
+}
+
 body {
-  background: linear-gradient(135deg, #0a0a1a 0%, #0f172a 50%, #1a1a2e 100%);
-  color: var(--foreground);
+  background: linear-gradient(135deg, var(--surface-base) 0%, var(--surface-mid) 50%, var(--surface-end) 100%);
+  color: var(--text-primary);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
   min-height: 100vh;
 }
 
 @utility glass {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--glass-bg);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--glass-border);
 }
 
 @utility glass-strong {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--glass-bg-strong);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid var(--glass-border-strong);
 }

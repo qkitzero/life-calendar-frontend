@@ -1,4 +1,5 @@
 import Header from '@/components/Header';
+import { ThemeProvider } from '@/context/ThemeContext';
 import { UserProvider } from '@/context/UserContext';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
@@ -34,12 +35,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'){document.documentElement.classList.add('dark')}}catch(e){}})();`,
+          }}
+        />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}>
-        <UserProvider>
-          <Header />
-          {children}
-        </UserProvider>
+        <ThemeProvider>
+          <UserProvider>
+            <Header />
+            {children}
+          </UserProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

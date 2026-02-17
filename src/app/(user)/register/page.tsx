@@ -63,10 +63,10 @@ export default function Register() {
 
   return (
     <div className="max-w-lg mx-auto p-8 rounded-2xl glass-strong mt-12">
-      <h1 className="text-2xl font-semibold mb-4 text-center text-white">User Register</h1>
+      <h1 className="text-2xl font-semibold mb-4 text-center text-primary">User Register</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="displayName" className="block mb-1 text-sm font-medium text-slate-300">
+          <label htmlFor="displayName" className="block mb-1 text-sm font-medium text-secondary">
             Display Name
           </label>
           <input
@@ -75,12 +75,12 @@ export default function Register() {
             value={displayName}
             onChange={(e) => setDisplayName(e.target.value)}
             required
-            className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white focus:border-emerald-400/50 focus:ring-1 focus:ring-emerald-400/20 focus:outline-none transition"
+            className="w-full bg-raised border border-subtle rounded-xl px-3 py-2 text-primary focus:border-emerald-400/50 focus:ring-1 focus:ring-emerald-400/20 focus:outline-none transition"
           />
         </div>
 
         <div>
-          <label htmlFor="birthDate" className="block mb-1 text-sm font-medium text-slate-300">
+          <label htmlFor="birthDate" className="block mb-1 text-sm font-medium text-secondary">
             Birth Date
           </label>
           <input
@@ -89,7 +89,7 @@ export default function Register() {
             value={birthDate}
             onChange={(e) => setBirthDate(e.target.value)}
             required
-            className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white focus:border-emerald-400/50 focus:ring-1 focus:ring-emerald-400/20 focus:outline-none transition"
+            className="w-full bg-raised border border-subtle rounded-xl px-3 py-2 text-primary focus:border-emerald-400/50 focus:ring-1 focus:ring-emerald-400/20 focus:outline-none transition"
           />
         </div>
 
