@@ -64,6 +64,7 @@ export default function EventManager({ events, onEventsChange }: EventManagerPro
             description,
             startTimeISO,
             endTimeISO,
+            color,
           }),
         });
 
@@ -227,13 +228,13 @@ export default function EventManager({ events, onEventsChange }: EventManagerPro
         {events.map((event) => (
           <div
             key={event.id}
-            className="w-8 h-8 flex items-center justify-center cursor-pointer"
+            className="w-8 h-8 flex items-center justify-center cursor-pointer rounded-lg hover:scale-110 ring-1 ring-white/10 transition-transform"
             style={{ backgroundColor: event.color }}
             onClick={() => handleOpenEditModal(event)}
           ></div>
         ))}
         <button
-          className="w-8 h-8 flex items-center justify-center cursor-pointer bg-gray-300"
+          className="w-8 h-8 flex items-center justify-center cursor-pointer bg-white/10 text-slate-300 rounded-lg hover:bg-white/20 transition"
           onClick={handleOpenCreateModal}
         >
           +
@@ -241,9 +242,9 @@ export default function EventManager({ events, onEventsChange }: EventManagerPro
       </div>
 
       {isModalOpen && (
-        <div className="absolute inset-0 flex justify-center z-10">
-          <div className="w-lg mx-auto p-8 rounded-md shadow-lg bg-white">
-            <h2 className="text-2xl font-semibold mb-4 text-center">
+        <div className="fixed inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm z-50">
+          <div className="w-full max-w-lg mx-4 p-8 rounded-2xl bg-slate-900/80 backdrop-blur-xl border border-white/10 shadow-2xl">
+            <h2 className="text-2xl font-semibold mb-4 text-center text-white">
               {editingEvent ? 'Edit Event' : 'Create Event'}
             </h2>
             <form
@@ -251,7 +252,7 @@ export default function EventManager({ events, onEventsChange }: EventManagerPro
               className="space-y-4"
             >
               <div>
-                <label htmlFor="title" className="block mb-1">
+                <label htmlFor="title" className="block mb-1 text-sm font-medium text-slate-300">
                   Title
                 </label>
                 <input
@@ -260,24 +261,24 @@ export default function EventManager({ events, onEventsChange }: EventManagerPro
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   required
-                  className="w-full border p-2 rounded"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white focus:border-emerald-400/50 focus:ring-1 focus:ring-emerald-400/20 focus:outline-none transition"
                 />
               </div>
 
               <div>
-                <label htmlFor="description" className="block mb-1">
+                <label htmlFor="description" className="block mb-1 text-sm font-medium text-slate-300">
                   Description
                 </label>
                 <textarea
                   id="description"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="w-full border p-2 rounded"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white focus:border-emerald-400/50 focus:ring-1 focus:ring-emerald-400/20 focus:outline-none transition"
                 />
               </div>
 
               <div>
-                <label htmlFor="startTime" className="block mb-1">
+                <label htmlFor="startTime" className="block mb-1 text-sm font-medium text-slate-300">
                   Start Date
                 </label>
                 <input
@@ -286,12 +287,12 @@ export default function EventManager({ events, onEventsChange }: EventManagerPro
                   value={startTime}
                   onChange={(e) => setStartTime(e.target.value)}
                   required
-                  className="w-full border p-2 rounded"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white focus:border-emerald-400/50 focus:ring-1 focus:ring-emerald-400/20 focus:outline-none transition"
                 />
               </div>
 
               <div>
-                <label htmlFor="endTime" className="block mb-1">
+                <label htmlFor="endTime" className="block mb-1 text-sm font-medium text-slate-300">
                   End Date
                 </label>
                 <input
@@ -300,12 +301,12 @@ export default function EventManager({ events, onEventsChange }: EventManagerPro
                   value={endTime}
                   onChange={(e) => setEndTime(e.target.value)}
                   required
-                  className="w-full border p-2 rounded"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-white focus:border-emerald-400/50 focus:ring-1 focus:ring-emerald-400/20 focus:outline-none transition"
                 />
               </div>
 
               <div>
-                <label htmlFor="color" className="block mb-1">
+                <label htmlFor="color" className="block mb-1 text-sm font-medium text-slate-300">
                   Color
                 </label>
                 <input
@@ -313,7 +314,7 @@ export default function EventManager({ events, onEventsChange }: EventManagerPro
                   type="color"
                   value={color}
                   onChange={(e) => setColor(e.target.value)}
-                  className="w-full h-10 border p-1 rounded"
+                  className="w-full h-10 bg-white/5 border border-white/10 rounded-xl p-1 focus:border-emerald-400/50 focus:ring-1 focus:ring-emerald-400/20 focus:outline-none transition"
                 />
               </div>
 
@@ -321,7 +322,7 @@ export default function EventManager({ events, onEventsChange }: EventManagerPro
                 {editingEvent && (
                   <button
                     type="button"
-                    className="w-full bg-red-500 text-white py-2 rounded hover:bg-red-600"
+                    className="w-full bg-rose-500/80 text-white py-2 rounded-xl hover:bg-rose-500 transition"
                     onClick={handleDeleteEvent}
                   >
                     Delete Event
@@ -330,7 +331,7 @@ export default function EventManager({ events, onEventsChange }: EventManagerPro
 
                 <button
                   type="button"
-                  className="w-full bg-gray-300 text-black py-2 rounded hover:bg-gray-400"
+                  className="w-full bg-white/10 text-slate-300 py-2 rounded-xl hover:bg-white/20 hover:text-white transition"
                   onClick={handleCloseModal}
                 >
                   Cancel
@@ -339,7 +340,7 @@ export default function EventManager({ events, onEventsChange }: EventManagerPro
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600"
+                  className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 text-white py-2 rounded-xl hover:from-emerald-600 hover:to-teal-600 disabled:opacity-50 transition"
                 >
                   {editingEvent ? 'Update Event' : 'Create Event'}
                 </button>
