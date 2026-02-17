@@ -25,8 +25,8 @@ export default function Header() {
   }, [menuRef]);
 
   return (
-    <header className="w-full flex justify-between items-center py-4 border-b mb-8">
-      <Link href="/" className="text-3xl font-bold hover:opacity-80 transition">
+    <header className="glass sticky top-0 z-20 w-full flex justify-between items-center py-4 px-8">
+      <Link href="/" className="text-3xl font-bold text-white hover:text-emerald-400 transition">
         Life Calendar
       </Link>
 
@@ -38,10 +38,10 @@ export default function Header() {
           <User />
         </button>
         {isMenuOpen && (
-          <div className="absolute mt-2 w-full bg-white rounded-md shadow-lg py-2 z-10">
+          <div className="absolute right-0 mt-8 glass-strong rounded-xl min-w-48 py-2 z-10">
             <Link
               href="/"
-              className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              className="block w-full text-left px-4 py-2 text-sm text-slate-300 hover:bg-white/10 hover:text-white transition"
             >
               Life Calendar
             </Link>
@@ -49,7 +49,7 @@ export default function Header() {
               <>
                 <Link
                   href="/update"
-                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  className="block w-full text-left px-4 py-2 text-sm text-slate-300 hover:bg-white/10 hover:text-white transition"
                 >
                   Update Profile
                 </Link>
