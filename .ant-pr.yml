@@ -1,5 +1,5 @@
 limits:
-  files: 15
+  files: 25
   lines:
     '': 100
     'src/': 500
