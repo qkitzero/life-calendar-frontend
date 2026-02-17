@@ -48,21 +48,23 @@ export default function WeekCell({
   weekEndTime,
 }: WeekCellProps) {
   let style = {};
-  let className = 'w-[10px] h-[10px] rounded-sm transition-all duration-200';
+  const classNames = ['w-[10px]', 'h-[10px]', 'rounded-sm', 'transition-all', 'duration-200'];
 
   if (isCurrent) {
-    className += ' bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.6)] animate-pulse';
+    classNames.push('bg-emerald-400', 'shadow-[0_0_6px_rgba(52,211,153,0.6)]', 'animate-pulse');
   } else if (events.length > 0) {
     const avgColor = averageColors(events.map((e) => e.color));
     style = { backgroundColor: avgColor };
     if (isLived) {
-      className += ' ring-1 ring-white/20';
+      classNames.push('ring-1', 'ring-white/20');
     }
   } else if (isLived) {
-    className += ' bg-white/20';
+    classNames.push('bg-white/20');
   } else {
-    className += ' bg-white/5';
+    classNames.push('bg-white/5');
   }
+
+  const className = classNames.join(' ');
 
   let tooltipText = `Week: ${weekStartTime.toISOString().split('T')[0]} ~ ${
     weekEndTime.toISOString().split('T')[0]
