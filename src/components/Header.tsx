@@ -38,7 +38,7 @@ export default function Header() {
           <User />
         </button>
         {isMenuOpen && (
-          <div className="absolute right-0 mt-2 glass-strong rounded-xl min-w-48 py-2 z-10">
+          <div className="absolute right-0 mt-8 glass-strong rounded-xl min-w-48 py-2 z-10">
             <Link
               href="/"
               className="block w-full text-left px-4 py-2 text-sm text-slate-300 hover:bg-white/10 hover:text-white transition"
