@@ -9,13 +9,24 @@ steps:
     args:
       - build
       - -t
-      - us-central1-docker.pkg.dev/$PROJECT_ID/life-calendar-frontend/$COMMIT_SHA
+      - us-central1-docker.pkg.dev/$PROJECT_ID/life-calendar-frontend/life-calendar-frontend:$COMMIT_SHA
       - .
 
   - name: gcr.io/cloud-builders/docker
     args:
       - push
-      - us-central1-docker.pkg.dev/$PROJECT_ID/life-calendar-frontend/$COMMIT_SHA
+      - us-central1-docker.pkg.dev/$PROJECT_ID/life-calendar-frontend/life-calendar-frontend:$COMMIT_SHA
+
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        gcloud artifacts repositories set-cleanup-policies life-calendar-frontend \
+          --project=$PROJECT_ID \
+          --location=us-central1 \
+          --policy=cleanup-policy.json \
+          --no-dry-run
 
   - name: gcr.io/google.com/cloudsdktool/cloud-sdk
     entrypoint: gcloud
@@ -24,14 +35,14 @@ steps:
       - deploy
       - life-calendar-frontend
       - --image
-      - us-central1-docker.pkg.dev/$PROJECT_ID/life-calendar-frontend/$COMMIT_SHA
+      - us-central1-docker.pkg.dev/$PROJECT_ID/life-calendar-frontend/life-calendar-frontend:$COMMIT_SHA
       - --region
       - us-central1
       - --memory
       - 512Mi
 
 images:
-  - us-central1-docker.pkg.dev/$PROJECT_ID/life-calendar-frontend/$COMMIT_SHA
+  - us-central1-docker.pkg.dev/$PROJECT_ID/life-calendar-frontend/life-calendar-frontend:$COMMIT_SHA
 
 options:
   logging: CLOUD_LOGGING_ONLY
