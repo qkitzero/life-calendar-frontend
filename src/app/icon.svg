@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Row 1: all past -->
+  <rect x="1" y="1" width="5" height="5" rx="1" fill="#475569"/>
+  <rect x="7" y="1" width="5" height="5" rx="1" fill="#475569"/>
+  <rect x="13" y="1" width="5" height="5" rx="1" fill="#475569"/>
+  <rect x="19" y="1" width="5" height="5" rx="1" fill="#475569"/>
+  <rect x="25" y="1" width="5" height="5" rx="1" fill="#475569"/>
+  <!-- Row 2: all past -->
+  <rect x="1" y="7" width="5" height="5" rx="1" fill="#475569"/>
+  <rect x="7" y="7" width="5" height="5" rx="1" fill="#475569"/>
+  <rect x="13" y="7" width="5" height="5" rx="1" fill="#475569"/>
+  <rect x="19" y="7" width="5" height="5" rx="1" fill="#475569"/>
+  <rect x="25" y="7" width="5" height="5" rx="1" fill="#475569"/>
+  <!-- Row 3: 2 past + current + 2 future -->
+  <rect x="1" y="13" width="5" height="5" rx="1" fill="#475569"/>
+  <rect x="7" y="13" width="5" height="5" rx="1" fill="#475569"/>
+  <rect x="13" y="13" width="5" height="5" rx="1" fill="#34d399"/>
+  <rect x="19" y="13" width="5" height="5" rx="1" fill="#cbd5e1"/>
+  <rect x="25" y="13" width="5" height="5" rx="1" fill="#cbd5e1"/>
+  <!-- Row 4: all future -->
+  <rect x="1" y="19" width="5" height="5" rx="1" fill="#cbd5e1"/>
+  <rect x="7" y="19" width="5" height="5" rx="1" fill="#cbd5e1"/>
+  <rect x="13" y="19" width="5" height="5" rx="1" fill="#cbd5e1"/>
+  <rect x="19" y="19" width="5" height="5" rx="1" fill="#cbd5e1"/>
+  <rect x="25" y="19" width="5" height="5" rx="1" fill="#cbd5e1"/>
+  <!-- Row 5: all future -->
+  <rect x="1" y="25" width="5" height="5" rx="1" fill="#cbd5e1"/>
+  <rect x="7" y="25" width="5" height="5" rx="1" fill="#cbd5e1"/>
+  <rect x="13" y="25" width="5" height="5" rx="1" fill="#cbd5e1"/>
+  <rect x="19" y="25" width="5" height="5" rx="1" fill="#cbd5e1"/>
+  <rect x="25" y="25" width="5" height="5" rx="1" fill="#cbd5e1"/>
+</svg>
