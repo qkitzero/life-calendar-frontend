@@ -42,6 +42,7 @@ steps:
       - 512Mi
       - --min-instances=0
       - --max-instances=1
+      - --allow-unauthenticated
 
 images:
   - us-central1-docker.pkg.dev/$PROJECT_ID/life-calendar-frontend/life-calendar-frontend:$COMMIT_SHA
