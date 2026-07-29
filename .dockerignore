@@ -1,0 +1,51 @@
+# dependencies
+node_modules
+
+# next.js
+.next
+out
+
+# production
+build
+
+# testing
+coverage
+
+# git
+.git
+.gitignore
+
+# env files
+.env*
+!.env.example
+!.env.production
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# typescript
+*.tsbuildinfo
+
+# docs
+README.md
+
+# ci / infra
+.github
+.ant-pr.yml
+Dockerfile
+.dockerignore
+cloudbuild.yaml
+cleanup-policy.json
+buf.gen.yaml
+
+# editor / tooling
+.vscode
+.idea
+.claude
